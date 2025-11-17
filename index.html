@@ -1,2143 +1,1859 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>🪨 Jolie Pas Cher - Collectionnez des Cailloux !</title>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700;900&family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-    <style>
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-        }
-
-        :root {
-            --primary: #d4af37;
-            --secondary: #2c3e50;
-            --accent: #e74c3c;
-            --success: #27ae60;
-            --light: #f8f9fa;
-            --dark: #1a1a1a;
-            --text: #333;
-            --text-light: #666;
-            --nul: #95a5a6;
-            --basique: #3498db;
-            --rare: #9b59b6;
-            --goat: #f39c12;
-        }
-
-        body {
-            font-family: 'Inter', sans-serif;
-            background: var(--light);
-            color: var(--text);
-            transition: background 0.3s, color 0.3s;
-        }
-
-        body.dark {
-            --light: #1a1a1a;
-            --dark: #f8f9fa;
-            --text: #e0e0e0;
-            --text-light: #a0a0a0;
-            --secondary: #4a5f7f;
-            background: var(--dark);
-            color: var(--text);
-        }
-
-        /* Login Screen */
-        .login-screen {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: #2c3e50;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-            z-index: 10000;
-        }
-
-        .login-screen.hide {
-            display: none;
-        }
-
-        .login-box {
-            background: white;
-            padding: 3rem;
-            border-radius: 20px;
-            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
-            text-align: center;
-            max-width: 400px;
-            width: 90%;
-        }
-
-        body.dark .login-box {
-            background: #2a2a2a;
-        }
-
-        .login-logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 2.5rem;
-            color: var(--primary);
-            margin-bottom: 2rem;
-            font-weight: 900;
-        }
-
-        .login-input {
-            width: 100%;
-            padding: 1rem;
-            margin: 0.5rem 0;
-            border: 2px solid #e0e0e0;
-            border-radius: 10px;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body.dark .login-input {
-            background: #3a3a3a;
-            border-color: #4a4a4a;
-            color: white;
-        }
-
-        .login-btn {
-            width: 100%;
-            padding: 1rem;
-            margin-top: 1rem;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 10px;
-            font-size: 18px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-
-        .login-btn:hover {
-            background: #c9a532;
-            transform: translateY(-2px);
-        }
-
-        .error-msg {
-            color: var(--accent);
-            margin-top: 1rem;
-            font-size: 14px;
-        }
-
-        /* Navigation */
-        nav {
-            background: #2c3e50;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-            position: sticky;
-            top: 0;
-            z-index: 1000;
-        }
-
-        body.dark nav {
-            background: #1e293b;
-        }
-
-        .nav-container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 1rem 2rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            flex-wrap: wrap;
-            gap: 1rem;
-        }
-
-        .logo {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            color: var(--primary);
-            font-weight: 900;
-        }
-
-        .nav-links {
-            display: flex;
-            gap: 2rem;
-            list-style: none;
-            align-items: center;
-            flex-wrap: wrap;
-        }
-
-        .nav-links a {
-            text-decoration: none;
-            color: white;
-            font-weight: 600;
-            transition: color 0.3s;
-            cursor: pointer;
-        }
-
-        .nav-links a:hover {
-            color: var(--primary);
-        }
-
-        .user-info {
-            display: flex;
-            align-items: center;
-            gap: 1rem;
-            color: white;
-            font-weight: 600;
-        }
-
-        .cailloux-count {
-            background: var(--primary);
-            padding: 0.5rem 1rem;
-            border-radius: 20px;
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-
-        .logout-btn {
-            background: var(--accent);
-            color: white;
-            border: none;
-            padding: 0.5rem 1rem;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        .logout-btn:hover {
-            background: #c0392b;
-        }
-
-        /* Hero Section */
-        .hero {
-            background: #2c3e50;
-            color: white;
-            padding: 4rem 2rem;
-            text-align: center;
-        }
-
-        body.dark .hero {
-            background: #1e293b;
-        }
-
-        .hero h1 {
-            font-family: 'Playfair Display', serif;
-            font-size: 3rem;
-            margin-bottom: 1rem;
-        }
-
-        .hero p {
-            font-size: 1.2rem;
-            opacity: 0.9;
-        }
-
-        /* Main Content */
-        .container {
-            max-width: 1400px;
-            margin: 0 auto;
-            padding: 3rem 2rem;
-        }
-
-        .section {
-            display: none;
-        }
-
-        .section.active {
-            display: block;
-        }
-
-        /* Products Grid */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
-            gap: 2rem;
-            margin-top: 2rem;
-        }
-
-        .product-card {
-            background: white;
-            border-radius: 12px;
-            overflow: hidden;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s, box-shadow 0.3s;
-            position: relative;
-        }
-
-        body.dark .product-card {
-            background: #2a2a2a;
-        }
-
-        .product-card:hover {
-            transform: translateY(-5px);
-            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
-        }
-
-        .product-card.nul {
-            border: 3px solid var(--nul);
-        }
-
-        .product-card.basique {
-            border: 3px solid var(--basique);
-        }
-
-        .product-card.rare {
-            border: 3px solid var(--rare);
-        }
-
-        .product-card.goat {
-            border: 3px solid var(--goat);
-            box-shadow: 0 0 20px rgba(243, 156, 18, 0.5);
-        }
-
-        .rarity-badge {
-            position: absolute;
-            top: 10px;
-            right: 10px;
-            padding: 0.3rem 0.8rem;
-            border-radius: 20px;
-            color: white;
-            font-size: 0.8rem;
-            font-weight: 700;
-            text-transform: uppercase;
-            z-index: 10;
-        }
-
-        .rarity-badge.nul {
-            background: var(--nul);
-        }
-
-        .rarity-badge.basique {
-            background: var(--basique);
-        }
-
-        .rarity-badge.rare {
-            background: var(--rare);
-        }
-
-        .rarity-badge.goat {
-            background: var(--goat);
-            animation: pulse 2s infinite;
-        }
-
-        @keyframes pulse {
-            0%, 100% { transform: scale(1); }
-            50% { transform: scale(1.1); }
-        }
-
-        .product-image {
-            width: 100%;
-            height: 200px;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 4rem;
-            background: #f5f5f5;
-        }
-
-        body.dark .product-image {
-            background: #3a3a3a;
-        }
-
-        .product-card.goat .product-image {
-            animation: shimmer 3s infinite;
-        }
-
-        @keyframes shimmer {
-            0% { background-position: -1000px 0; }
-            100% { background-position: 1000px 0; }
-        }
-
-        .product-info {
-            padding: 1.5rem;
-        }
-
-        .product-name {
-            font-weight: 600;
-            font-size: 1.1rem;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-price {
-            color: var(--primary);
-            font-size: 1.3rem;
-            font-weight: 700;
-            margin-bottom: 0.5rem;
-        }
-
-        .product-expires {
-            font-size: 0.85rem;
-            color: var(--text-light);
-            margin-bottom: 1rem;
-        }
-
-        .btn {
-            background: var(--primary);
-            color: white;
-            border: none;
-            padding: 0.75rem 1.5rem;
-            border-radius: 8px;
-            font-weight: 600;
-            cursor: pointer;
-            transition: all 0.3s;
-            width: 100%;
-            font-size: 16px;
-        }
-
-        .btn:hover {
-            background: #c9a532;
-            transform: translateY(-2px);
-        }
-
-        .btn-secondary {
-            background: var(--secondary);
-            margin-top: 0.5rem;
-        }
-
-        .btn-secondary:hover {
-            background: #34495e;
-        }
-
-        .btn-danger {
-            background: var(--accent);
-        }
-
-        .btn-danger:hover {
-            background: #c0392b;
-        }
-
-        /* Packs */
-        .pack-card {
-            background: white;
-            border-radius: 12px;
-            padding: 2rem;
-            text-align: center;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-            transition: transform 0.3s;
-        }
-
-        body.dark .pack-card {
-            background: #2a2a2a;
-        }
-
-        .pack-card:hover {
-            transform: translateY(-5px);
-        }
-
-        .pack-icon {
-            font-size: 5rem;
-            margin-bottom: 1rem;
-        }
-
-        .pack-name {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.5rem;
-            margin-bottom: 1rem;
-            font-weight: 700;
-        }
-
-        .pack-price {
-            color: var(--primary);
-            font-size: 2rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .pack-rates {
-            text-align: left;
-            margin: 1rem 0;
-            font-size: 0.9rem;
-        }
-
-        .pack-rates div {
-            margin: 0.3rem 0;
-        }
-
-        /* Library */
-        .library-tabs {
-            display: flex;
-            gap: 1rem;
-            margin-bottom: 2rem;
-            flex-wrap: wrap;
-        }
-
-        .library-tab {
-            padding: 0.75rem 1.5rem;
-            border: 2px solid var(--primary);
-            background: white;
-            border-radius: 8px;
-            cursor: pointer;
-            font-weight: 600;
-            transition: all 0.3s;
-        }
-
-        body.dark .library-tab {
-            background: #2a2a2a;
-        }
-
-        .library-tab.active {
-            background: var(--primary);
-            color: white;
-        }
-
-        /* Leaderboard */
-        .leaderboard {
-            max-width: 600px;
-            margin: 2rem auto;
-        }
-
-        .leaderboard-item {
-            background: white;
-            padding: 1.5rem;
-            margin-bottom: 1rem;
-            border-radius: 12px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
-        }
-
-        body.dark .leaderboard-item {
-            background: #2a2a2a;
-        }
-
-        .leaderboard-item.first {
-            border: 3px solid #f39c12;
-        }
-
-        .leaderboard-item.second {
-            border: 3px solid #95a5a6;
-        }
-
-        .leaderboard-item.third {
-            border: 3px solid #cd7f32;
-        }
-
-        .leaderboard-rank {
-            font-size: 2rem;
-            font-weight: 700;
-            margin-right: 1rem;
-        }
-
-        .leaderboard-name {
-            flex: 1;
-            font-weight: 600;
-            font-size: 1.2rem;
-        }
-
-        .leaderboard-cailloux {
-            font-size: 1.5rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        /* Admin Panel */
-        .admin-section {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        body.dark .admin-section {
-            background: #2a2a2a;
-        }
-
-        .admin-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.8rem;
-            margin-bottom: 1rem;
-            color: var(--primary);
-        }
-
-        .form-group {
-            margin-bottom: 1rem;
-        }
-
-        .form-label {
-            display: block;
-            margin-bottom: 0.5rem;
-            font-weight: 600;
-        }
-
-        .form-input, .form-select {
-            width: 100%;
-            padding: 0.75rem;
-            border: 2px solid #e0e0e0;
-            border-radius: 8px;
-            font-size: 16px;
-            font-family: 'Inter', sans-serif;
-        }
-
-        body.dark .form-input,
-        body.dark .form-select {
-            background: #3a3a3a;
-            border-color: #4a4a4a;
-            color: white;
-        }
-
-        .user-list {
-            margin-top: 1rem;
-        }
-
-        .user-item {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 1rem;
-            background: #f5f5f5;
-            margin-bottom: 0.5rem;
-            border-radius: 8px;
-        }
-
-        body.dark .user-item {
-            background: #3a3a3a;
-        }
-
-        /* Game Section */
-        .game-wrapper {
-            max-width: 900px;
-            margin: 0 auto;
-        }
-
-        .game-stats {
-            background: white;
-            padding: 1.5rem;
-            border-radius: 12px;
-            margin-bottom: 2rem;
-            display: flex;
-            justify-content: space-around;
-            flex-wrap: wrap;
-            gap: 1rem;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
-        }
-
-        body.dark .game-stats {
-            background: #2a2a2a;
-        }
-
-        .game-stat {
-            text-align: center;
-        }
-
-        .game-stat-value {
-            font-size: 2rem;
-            font-weight: 700;
-            color: var(--primary);
-        }
-
-        .game-stat-label {
-            font-size: 0.9rem;
-            color: var(--text-light);
-            margin-top: 0.5rem;
-        }
-
-        .game-container {
-            position: relative;
-            width: 100%;
-            height: 500px;
-            background: rgba(255, 255, 255, 0.1);
-            backdrop-filter: blur(10px);
-            border-radius: 20px;
-            overflow: hidden;
-            box-shadow: 0 20px 60px rgba(0, 0, 0, 0.3);
-            border: 2px solid rgba(255, 255, 255, 0.2);
-        }
-
-        #gameCanvas {
-            width: 100%;
-            height: 100%;
-            display: block;
-        }
-
-        .ui-overlay {
-            position: absolute;
-            top: 20px;
-            left: 20px;
-            right: 20px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            pointer-events: none;
-            z-index: 10;
-        }
-
-        .score {
-            font-family: 'Playfair Display', serif;
-            font-size: 32px;
-            color: #fff;
-            text-shadow: 0 4px 10px rgba(0, 0, 0, 0.5);
-        }
-
-        .game-over-screen, .start-screen {
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.85);
-            backdrop-filter: blur(10px);
-            display: flex;
-            flex-direction: column;
-            justify-content: center;
-            align-items: center;
-            z-index: 20;
-        }
-
-        .game-over-screen {
-            display: none;
-        }
-
-        .game-over-screen.show {
-            display: flex;
-        }
-
-        .start-screen.hide {
-            display: none;
-        }
-
-        .game-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 72px;
-            color: #fff;
-            margin-bottom: 20px;
-            text-shadow: 0 6px 20px rgba(255, 255, 255, 0.3);
-        }
-
-        .game-over-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 64px;
-            color: #ff6b6b;
-            margin-bottom: 20px;
-            text-shadow: 0 4px 20px rgba(255, 107, 107, 0.5);
-        }
-
-        .final-score {
-            font-size: 28px;
-            color: #fff;
-            margin-bottom: 30px;
-        }
-
-        .instructions {
-            font-size: 20px;
-            color: #fff;
-            margin-bottom: 30px;
-            text-align: center;
-        }
-
-        .start-btn, .restart-btn {
-            font-family: 'Inter', sans-serif;
-            font-size: 24px;
-            font-weight: 600;
-            padding: 18px 50px;
-            background: var(--primary);
-            color: white;
-            border: none;
-            border-radius: 50px;
-            cursor: pointer;
-            transition: transform 0.2s, box-shadow 0.2s;
-            box-shadow: 0 10px 30px rgba(212, 175, 55, 0.4);
-        }
-
-        .restart-btn {
-            font-size: 20px;
-            padding: 15px 40px;
-        }
-
-        .start-btn:hover, .restart-btn:hover {
-            transform: translateY(-2px);
-            box-shadow: 0 15px 40px rgba(212, 175, 55, 0.6);
-        }
-
-        .start-btn:active, .restart-btn:active {
-            transform: translateY(0);
-        }
-
-        /* Modal */
-        .modal {
-            position: fixed;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            background: rgba(0, 0, 0, 0.7);
-            display: none;
-            justify-content: center;
-            align-items: center;
-            z-index: 5000;
-        }
-
-        .modal.show {
-            display: flex;
-        }
-
-        .modal-content {
-            background: white;
-            padding: 2rem;
-            border-radius: 12px;
-            max-width: 500px;
-            width: 90%;
-            text-align: center;
-        }
-
-        body.dark .modal-content {
-            background: #2a2a2a;
-        }
-
-        .modal-title {
-            font-size: 1.5rem;
-            font-weight: 700;
-            margin-bottom: 1rem;
-        }
-
-        .modal-buttons {
-            display: flex;
-            gap: 1rem;
-            margin-top: 1.5rem;
-        }
-
-        /* Responsive */
-        @media (max-width: 768px) {
-            .nav-links {
-                gap: 1rem;
-            }
-
-            .hero h1 {
-                font-size: 2rem;
-            }
-
-            .products-grid {
-                grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
-                gap: 1rem;
-            }
-
-            .game-container {
-                height: 350px;
-            }
-
-            .game-title {
-                font-size: 48px;
-            }
-
-            .game-over-title {
-                font-size: 48px;
-            }
-
-            .score {
-                font-size: 24px;
-            }
-
-            .nav-container {
-                flex-direction: column;
-            }
-        }
-    </style>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>JOLI PAS CHER</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jsqr@1.4.0/dist/jsQR.js"></script>
+
+  <!-- Firebase -->
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-app-compat.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/10.7.1/firebase-firestore-compat.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=Cinzel:wght@400;700&family=Playfair+Display:wght@400;700&display=swap');
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: 'Playfair Display', serif;
+      background: linear-gradient(135deg, #4A4A4A 0%, #6B5B45 50%, #8B7355 100%);
+      min-height: 100vh;
+      color: #fff;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+      font-family: 'Cinzel', serif;
+      color: #FFD700;
+      text-shadow: 2px 2px 4px rgba(0,0,0,0.7);
+    }
+
+    .gold-text {
+      color: #FFD700;
+      font-weight: 700;
+    }
+
+    .btn-primary {
+      background: #8B7355;
+      color: #FFD700;
+      border: 2px solid #FFD700;
+      font-weight: 700;
+      transition: all 0.3s ease;
+      cursor: pointer;
+    }
+
+    .btn-primary:hover {
+      background: #FFD700;
+      color: #2c2420;
+      transform: scale(1.05);
+    }
+
+    .card {
+      background: rgba(90, 90, 90, 0.4);
+      backdrop-filter: blur(10px);
+      border: 1px solid rgba(255, 215, 0, 0.3);
+      border-radius: 15px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+    }
+
+    /* Geometry Dash Game */
+    #game-canvas {
+      background: #2D2D2D;
+      border: 3px solid #FFD700;
+      border-radius: 10px;
+      display: block;
+      margin: 0 auto;
+    }
+
+    /* Rarity styles */
+    .rarity-nul {
+      border: 2px solid #666;
+      background: linear-gradient(135deg, rgba(102, 102, 102, 0.3), rgba(74, 74, 74, 0.3));
+    }
+
+    .rarity-basique {
+      border: 2px solid #4a9eff;
+      background: linear-gradient(135deg, rgba(74, 158, 255, 0.3), rgba(30, 144, 255, 0.3));
+    }
+
+    .rarity-rare {
+      border: 2px solid #9945ff;
+      background: linear-gradient(135deg, rgba(153, 69, 255, 0.3), rgba(138, 43, 226, 0.3));
+    }
+
+    .rarity-goat {
+      border: 2px solid #FFD700;
+      background: linear-gradient(135deg, rgba(255, 215, 0, 0.4), rgba(255, 165, 0, 0.4));
+      box-shadow: 0 0 20px rgba(255, 215, 0, 0.6);
+      animation: goat-glow 2s ease-in-out infinite;
+    }
+
+    @keyframes goat-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 215, 0, 0.6); }
+      50% { box-shadow: 0 0 35px rgba(255, 215, 0, 0.9); }
+    }
+
+    .modal-overlay {
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.85);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      z-index: 1000;
+      padding: 1rem;
+    }
+
+    .modal-content {
+      background: #4a4a4a;
+      border: 2px solid #FFD700;
+      border-radius: 15px;
+      padding: 2rem;
+      max-width: 500px;
+      width: 100%;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+  </style>
 </head>
 <body>
-    <div class="login-screen" id="loginScreen">
-        <div class="login-box">
-            <div class="login-logo">🪨 Jolie Pas Cher</div>
-            <input type="text" class="login-input" id="username" placeholder="Email (utilisé pour Firebase)">
-            <input type="password" class="login-input" id="password" placeholder="Mot de passe">
-            <button class="login-btn" onclick="login()">Se connecter</button>
-            <button class="login-btn btn-secondary" style="margin-top: 0.5rem;" onclick="showSignup()">Créer un compte</button>
-            <div class="error-msg" id="errorMsg"></div>
+
+<!-- Loading Screen -->
+<div id="loading-screen" style="position: fixed; inset: 0; z-index: 10000; display: flex; align-items: center; justify-content: center; background: linear-gradient(135deg, #4A4A4A 0%, #6B5B45 50%, #8B7355 100%);">
+  <div style="text-align: center;">
+    <img src="https://i.postimg.cc/9Xx6XHrD/Screenshot-20250525-094331.png" alt="Logo" style="width: 128px; height: 128px; margin: 0 auto 2rem; animation: bounce 1s infinite;">
+    <h1 style="font-size: 3rem; font-family: 'Cinzel', serif; color: #FFD700; margin-bottom: 1rem;">JOLI PAS CHER</h1>
+    <p style="font-size: 1.25rem; color: #FFD700; margin-bottom: 2rem;">Chargement en cours...</p>
+    <div style="display: flex; justify-content: center; gap: 0.5rem;">
+      <div style="width: 16px; height: 16px; background: #FFD700; border-radius: 50%; animation: pulse 1.5s ease-in-out infinite;"></div>
+      <div style="width: 16px; height: 16px; background: #FFD700; border-radius: 50%; animation: pulse 1.5s ease-in-out 0.2s infinite;"></div>
+      <div style="width: 16px; height: 16px; background: #FFD700; border-radius: 50%; animation: pulse 1.5s ease-in-out 0.4s infinite;"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Header -->
+<header style="position: sticky; top: 0; z-index: 50; background: rgba(75, 64, 55, 0.95); backdrop-filter: blur(10px); box-shadow: 0 4px 6px rgba(0,0,0,0.3); border-bottom: 2px solid #FFD700;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 1rem; display: flex; align-items: center; justify-content: space-between;">
+    <div style="display: flex; align-items: center; gap: 1rem;">
+      <img src="https://i.postimg.cc/9Xx6XHrD/Screenshot-20250525-094331.png" alt="Logo" style="height: 48px; width: 48px; object-fit: contain;">
+      <h1 class="gold-text" style="font-size: 1.5rem;">JOLI PAS CHER</h1>
+    </div>
+
+    <button onclick="toggleMenu()" style="padding: 0.5rem; border-radius: 0.5rem; background: rgba(255, 215, 0, 0.2); border: 1px solid #FFD700; cursor: pointer;">
+      <svg style="width: 24px; height: 24px; color: #FFD700;" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16"></path>
+      </svg>
+    </button>
+  </div>
+
+  <!-- Menu -->
+  <div id="menu" style="display: none; background: rgba(44, 36, 32, 0.95); backdrop-filter: blur(10px);">
+    <div style="max-width: 1280px; margin: 0 auto; padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem;">
+      <button onclick="showSection('accueil')" class="btn-primary" style="padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left;">🏠 Accueil</button>
+      <button onclick="showSection('boutique')" class="btn-primary" style="padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left;">🛍️ Boutique</button>
+      <button onclick="showSection('panier')" class="btn-primary" style="padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left;">🛒 Panier</button>
+      <button onclick="showSection('bibliotheque')" class="btn-primary" style="padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left;">📚 Bibliothèque</button>
+      <button onclick="showSection('classement')" class="btn-primary" style="padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left;">🏆 Classement</button>
+      <button onclick="showSection('jeu')" class="btn-primary" style="padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left;">🎮 Jeu</button>
+      <button id="messages-menu-btn" onclick="showSection('messages')" class="btn-primary" style="display: none; padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left; position: relative;">💬 Messages</button>
+      <button id="admin-menu-btn" onclick="showSection('admin')" class="btn-primary" style="display: none; padding: 0.75rem 1rem; border-radius: 0.5rem; text-align: left; background: #8B0000;">⚙️ Administrateur</button>
+    </div>
+  </div>
+</header>
+
+<main style="max-width: 1280px; margin: 0 auto; padding: 2rem 1rem;">
+
+  <!-- Section Accueil -->
+  <section id="accueil" class="section active">
+    <div style="text-align: center; margin-bottom: 3rem;">
+      <h1 class="gold-text" style="font-size: 2.5rem; margin-bottom: 1rem;">Bienvenue sur Joli Pas Cher</h1>
+      <p style="font-size: 1.5rem; color: #FFD700; opacity: 0.9;">Découvrez des produits <strong>uniques</strong> à petit prix !</p>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+      <a href="https://poe.com/Har22fragpt" target="_blank" class="btn-primary" style="padding: 1rem 2rem; border-radius: 0.5rem; text-decoration: none; display: inline-block; font-size: 1.125rem; text-transform: uppercase;">
+        💬 Discute avec le S (sur Poe)
+      </a>
+    </div>
+
+    <div style="display: flex; justify-content: center; margin-bottom: 2rem;">
+      <iframe
+        src="https://www.instagram.com/reel/DGvmGEgNK-c/embed/?autoplay=1&hidecaption=1&controls=0"
+        width="400"
+        height="350"
+        frameborder="0"
+        scrolling="no"
+        allow="autoplay; encrypted-media"
+        style="border-radius: 15px; box-shadow: 0 10px 30px rgba(0,0,0,0.5); max-width: 100%;">
+      </iframe>
+    </div>
+
+    <div class="card" style="padding: 2rem;">
+      <h2 class="gold-text" style="text-align: center; margin-bottom: 1.5rem; font-size: 2rem;">🎵 Meilleures Musiques</h2>
+
+      <div style="display: flex; flex-direction: column; gap: 1rem;">
+        <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 1rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #FFD700; margin-bottom: 0.5rem;">Frank le bœuf</h3>
+          <iframe width="100%" height="60" src="https://vocaroo.com/embed/1omwth55KSLT?autoplay=1" frameborder="0" allow="autoplay" style="border-radius: 5px;"></iframe>
         </div>
-    </div>
 
-    <nav>
-        <div class="nav-container">
-            <div class="logo">🪨 Jolie Pas Cher</div>
-            <ul class="nav-links">
-                <li><a onclick="showSection('home')">Accueil</a></li>
-                <li><a onclick="showSection('shop')">Boutique</a></li>
-                <li><a onclick="showSection('packs')">Packs</a></li>
-                <li><a onclick="showSection('library')">Bibliothèque</a></li>
-                <li><a onclick="showSection('game')">Jeu</a></li>
-                <li><a onclick="showSection('leaderboard')">Classement</a></li>
-                <li id="adminLink" style="display: none;"><a onclick="showSection('admin')">Admin</a></li>
-            </ul>
-            <div class="user-info">
-                <div class="cailloux-count">
-                    🪨 <span id="userCailloux">0</span>
-                </div>
-                <span id="usernameDisplay"></span>
-                <button class="logout-btn" onclick="logout()">Déconnexion</button>
-            </div>
+        <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 1rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #FFD700; margin-bottom: 0.5rem;">Band organise samba</h3>
+          <iframe width="100%" height="60" src="https://vocaroo.com/embed/1ghiDBHLVRtn?autoplay=0" frameborder="0" allow="autoplay" style="border-radius: 5px;"></iframe>
         </div>
-    </nav>
 
-    <div class="hero">
-        <h1>🪨 Collectionnez des Cailloux !</h1>
-        <p>Ouvrez des packs, jouez au jeu et collectionnez des objets rares</p>
-    </div>
-
-    <div class="container">
-        <section id="home" class="section active">
-            <h2>Bienvenue sur Jolie Pas Cher !</h2>
-            <p style="margin-top: 1rem; color: var(--text-light); font-size: 1.1rem;">
-                🪨 Achetez des packs pour collectionner des objets rares !<br>
-                🎮 Jouez au Caillou Dash pour gagner des cailloux !<br>
-                🏆 Grimpez au classement pour devenir le meilleur collectionneur !
-            </p>
-        </section>
-
-        <section id="shop" class="section">
-            <h2>🛍️ Boutique</h2>
-            <div class="products-grid" id="shopGrid"></div>
-        </section>
-
-        <section id="packs" class="section">
-            <h2>📦 Packs Mystère</h2>
-            <div class="products-grid">
-                <div class="pack-card">
-                    <div class="pack-icon">📦</div>
-                    <div class="pack-name">Pack Basique</div>
-                    <div class="pack-price">50 🪨</div>
-                    <div class="pack-rates">
-                        <div>🔘 Nul: 50%</div>
-                        <div>🔵 Basique: 30%</div>
-                        <div>🟣 Rare: 19%</div>
-                        <div>🟡 GOAT: 1%</div>
-                    </div>
-                    <button class="btn" onclick="openPack(50)">Ouvrir</button>
-                </div>
-                <div class="pack-card">
-                    <div class="pack-icon">🎁</div>
-                    <div class="pack-name">Pack Premium</div>
-                    <div class="pack-price">100 🪨</div>
-                    <div class="pack-rates">
-                        <div>🔘 Nul: 30%</div>
-                        <div>🔵 Basique: 40%</div>
-                        <div>🟣 Rare: 25%</div>
-                        <div>🟡 GOAT: 5%</div>
-                    </div>
-                    <button class="btn" onclick="openPack(100)">Ouvrir</button>
-                </div>
-                <div class="pack-card">
-                    <div class="pack-icon">💎</div>
-                    <div class="pack-name">Pack Ultime</div>
-                    <div class="pack-price">250 🪨</div>
-                    <div class="pack-rates">
-                        <div>🔘 Nul: 10%</div>
-                        <div>🔵 Basique: 30%</div>
-                        <div>🟣 Rare: 40%</div>
-                        <div>🟡 GOAT: 20%</div>
-                    </div>
-                    <button class="btn" onclick="openPack(250)">Ouvrir</button>
-                </div>
-            </div>
-        </section>
-
-        <section id="library" class="section">
-            <h2>📚 Ma Bibliothèque</h2>
-            <div class="library-tabs">
-                <button class="library-tab active" onclick="filterLibrary('all')">Tous</button>
-                <button class="library-tab" onclick="filterLibrary('goat')">🟡 GOAT</button>
-                <button class="library-tab" onclick="filterLibrary('rare')">🟣 Rare</button>
-                <button class="library-tab" onclick="filterLibrary('basique')">🔵 Basique</button>
-                <button class="library-tab" onclick="filterLibrary('nul')">🔘 Nul</button>
-            </div>
-            <div class="products-grid" id="libraryGrid"></div>
-        </section>
-
-        <section id="game" class="section">
-            <div class="game-wrapper">
-                <h2 style="text-align: center; margin-bottom: 1rem;">🪨 Caillou Dash</h2>
-                <div class="game-stats">
-                    <div class="game-stat">
-                        <div class="game-stat-value" id="gameEarnings">0</div>
-                        <div class="game-stat-label">Cailloux gagnés</div>
-                    </div>
-                    <div class="game-stat">
-                        <div class="game-stat-value" id="gameBestScore">0</div>
-                        <div class="game-stat-label">Meilleur score</div>
-                    </div>
-                    <div class="game-stat">
-                        <div class="game-stat-value" id="gameAliveTime">0s</div>
-                        <div class="game-stat-label">Temps de survie</div>
-                    </div>
-                </div>
-                <div class="game-container">
-                    <canvas id="gameCanvas"></canvas>
-
-                    <div class="ui-overlay">
-                        <div class="score" id="score">0</div>
-                    </div>
-
-                    <div class="start-screen" id="startScreen">
-                        <div class="game-title">🪨 Caillou Dash</div>
-                        <div class="instructions">
-                            Cliquez ou appuyez pour sauter<br>
-                            Gagnez 1 caillou toutes les 10 secondes !
-                        </div>
-                        <button class="start-btn" id="startBtn">Commencer</button>
-                    </div>
-
-                    <div class="game-over-screen" id="gameOverScreen">
-                        <div class="game-over-title">Game Over!</div>
-                        <div class="final-score">Score: <span id="finalScore">0</span></div>
-                        <div class="final-score">🪨 Gagnés: <span id="finalEarnings">0</span></div>
-                        <button class="restart-btn" id="restartBtn">Recommencer</button>
-                    </div>
-                </div>
-            </div>
-        </section>
-
-        <section id="leaderboard" class="section">
-            <h2 style="text-align: center;">🏆 Classement</h2>
-            <div class="leaderboard" id="leaderboardList"></div>
-        </section>
-
-        <section id="admin" class="section">
-            <div class="admin-section">
-                <h3 class="admin-title">Ajouter un Produit</h3>
-                <div class="form-group">
-                    <label class="form-label">Nom du produit</label>
-                    <input type="text" class="form-input" id="productName">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Emoji</label>
-                    <input type="text" class="form-input" id="productEmoji" placeholder="Ex: 🎮">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Prix (en cailloux)</label>
-                    <input type="number" class="form-input" id="productPrice">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Rareté</label>
-                    <select class="form-select" id="productRarity">
-                        <option value="nul">🔘 Nul</option>
-                        <option value="basique">🔵 Basique</option>
-                        <option value="rare">🟣 Rare</option>
-                        <option value="goat">🟡 GOAT</option>
-                    </select>
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Durée de vie (jours)</label>
-                    <input type="number" class="form-input" id="productDuration" value="7" placeholder="Laisser vide pour permanent">
-                </div>
-                <button class="btn" onclick="addProduct()">Ajouter le Produit</button>
-            </div>
-
-            <div class="admin-section" id="ownerSection" style="display: none;">
-                <h3 class="admin-title">Gérer les Employés (Owner uniquement)</h3>
-                <div class="form-group">
-                    <label class="form-label">Nom d'utilisateur</label>
-                    <input type="text" class="form-input" id="employeeName">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Mot de passe</label>
-                    <input type="password" class="form-input" id="employeePassword">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Salaire (en cailloux)</label>
-                    <input type="number" class="form-input" id="employeeSalary" value="500">
-                </div>
-                <div class="form-group">
-                    <label class="form-label">Rôle</label>
-                    <select class="form-select" id="employeeRole">
-                        <option value="employee">Employé</option>
-                        <option value="admin">Administrateur</option>
-                    </select>
-                </div>
-                <button class="btn btn-secondary" onclick="addEmployee()">Ajouter un Employé</button>
-
-                <h4 style="margin-top: 2rem; border-bottom: 1px solid #eee; padding-bottom: 0.5rem;">Liste des Employés</h4>
-                <div class="user-list" id="employeeList">
-                    </div>
-                <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="checkSalaries()">Payer les Salaires Maintenant</button>
-            </div>
-
-            <div class="admin-section">
-                <h3 class="admin-title">Gérer les Utilisateurs</h3>
-                <div class="user-list" id="userList">
-                    </div>
-                <button class="btn btn-secondary" style="margin-top: 1rem;" onclick="renderUserList()">Rafraîchir la Liste</button>
-            </div>
-        </section>
-
-    </div>
-
-    <div class="modal" id="modal">
-        <div class="modal-content">
-            <div class="modal-title" id="modalTitle"></div>
-            <div class="modal-body" id="modalBody"></div>
-            <div class="modal-buttons">
-                <button class="btn" style="width: 50%;" onclick="closeModal()">OK</button>
-            </div>
+        <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 1rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #FFD700; margin-bottom: 0.5rem;">Journal 2 20h02</h3>
+          <iframe width="100%" height="60" src="https://vocaroo.com/embed/1bKOLORGf4GO?autoplay=0" frameborder="0" allow="autoplay" style="border-radius: 5px;"></iframe>
         </div>
+
+        <div style="background: rgba(0,0,0,0.2); border-radius: 10px; padding: 1rem;">
+          <h3 style="font-size: 1.125rem; font-weight: 600; color: #FFD700; margin-bottom: 0.5rem;">Vendez votre Frank Lebœuf</h3>
+          <iframe width="100%" height="60" src="https://vocaroo.com/embed/1fLLgpWY9xxo?autoplay=0" frameborder="0" allow="autoplay" style="border-radius: 5px;"></iframe>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Boutique -->
+  <section id="boutique" class="section">
+    <div style="margin-bottom: 2rem; text-align: center;">
+      <input
+        type="text"
+        id="recherche"
+        oninput="filtrerArticles()"
+        placeholder="🔍 Rechercher un article..."
+        style="width: 100%; max-width: 500px; padding: 0.75rem 1.5rem; border-radius: 50px; border: 2px solid #FFD700; background: rgba(107, 93, 82, 0.5); color: #FFD700; font-size: 16px; outline: none;">
     </div>
 
-    <script type="module">
-        // --- NOUVELLE CONFIGURATION ET IMPORTS MODULAIRES ---
-
-        import { initializeApp } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-app.js";
-        import { 
-            getFirestore, 
-            collection, 
-            doc, 
-            getDoc, 
-            setDoc, 
-            updateDoc, 
-            runTransaction, 
-            query, 
-            where, 
-            orderBy, 
-            limit, 
-            getDocs, 
-            FieldValue,
-            writeBatch
-        } from "https://www.gstatic.com/firebasejs/10.11.0/firebase-firestore.js";
-
-        // Votre configuration Firebase (utilisée pour initialiser l'app)
-        const firebaseConfig = {
-            apiKey: "AIzaSyDUztozKsSV8b1imdc9YWw0CL_RlPmIKPk",
-            authDomain: "jolie-pas-cher.firebaseapp.com",
-            projectId: "jolie-pas-cher",
-            storageBucket: "jolie-pas-cher.firebasestorage.app",
-            messagingSenderId: "835428667735",
-            appId: "1:835428667735:web:19c9b0c1c1854fe80c2e12",
-            measurementId: "G-XQ0WB0V8KQ"
-        };
-
-        // 1. Initialisation de Firebase
-        const app = initializeApp(firebaseConfig);
-        const db = getFirestore(app);
-        const usersCollectionRef = collection(db, 'users');
-        const productsCollectionRef = collection(db, 'products');
-
-        // Variables de stockage en mémoire pour l'état actuel de l'utilisateur
-        let currentUser = null; // ID de l'utilisateur (Firestore Doc ID)
-        let currentUserData = null; // Données complètes de l'utilisateur
-        let shopProducts = []; // Cache des produits de la boutique
-        let gameBestScore = 0; 
-
-        // Rendre FieldValue disponible globalement si nécessaire, bien qu'il soit importé
-        const increment = FieldValue.increment;
-
-        /**
-         * Met à jour le document de l'utilisateur actuel dans Firestore.
-         * @param {object} data Les champs à mettre à jour.
-         */
-        async function updateUserDoc(data) {
-            if (!currentUser) return;
-            try {
-                // Mettre à jour l'objet local
-                currentUserData = { ...currentUserData, ...data };
-                // Écrire sur Firestore
-                await updateDoc(doc(db, 'users', currentUser), data);
-                console.log("Document utilisateur mis à jour avec succès !");
-            } catch (e) {
-                console.error("Erreur lors de la mise à jour du document utilisateur: ", e);
-            }
-        }
-
-        // Variable pour basculer entre Login et Signup dans l'écran de connexion
-        let isLoginMode = true;
-
-        window.showSignup = function() { // Rendre ces fonctions globales
-            isLoginMode = false;
-            document.querySelector('.login-btn').textContent = 'Créer le compte';
-            document.querySelector('.login-btn').setAttribute('onclick', 'signup()');
-            document.querySelector('.btn-secondary').textContent = 'Retour à la connexion';
-            document.querySelector('.btn-secondary').setAttribute('onclick', 'showLogin()');
-            document.getElementById('errorMsg').textContent = '';
-        }
-
-        window.showLogin = function() { // Rendre ces fonctions globales
-            isLoginMode = true;
-            document.querySelector('.login-btn').textContent = 'Se connecter';
-            document.querySelector('.login-btn').setAttribute('onclick', 'login()');
-            document.querySelector('.btn-secondary').textContent = 'Créer un compte';
-            document.querySelector('.btn-secondary').setAttribute('onclick', 'showSignup()');
-            document.getElementById('errorMsg').textContent = '';
-        }
-
-        // --- Fonctions de Connexion et Inscription ---
-
-        window.logout = function() {
-            currentUser = null;
-            currentUserData = null;
-            document.getElementById('adminLink').style.display = 'none';
-            document.getElementById('ownerSection').style.display = 'none';
-            document.getElementById('loginScreen').classList.remove('hide');
-            showLogin(); // Réinitialiser l'écran à la connexion
-        }
-
-        window.login = async function() {
-            const usernameInput = document.getElementById('username');
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-
-            if (!usernameInput.value || !password) {
-                errorMsg.textContent = 'Veuillez remplir tous les champs';
-                return;
-            }
-
-            // Convertir en majuscules pour une recherche insensible à la casse
-            // ATTENTION: La recherche est insensible à la casse, donc 'HAR22FRA' ou 'har22fra' fonctionne.
-            const username = usernameInput.value.trim().toUpperCase(); 
-
-            errorMsg.textContent = 'Connexion en cours...';
-
-            try {
-                // 1. Chercher l'utilisateur dans Firestore (MODULAIRE)
-                const userDocRef = doc(db, 'users', username);
-                const userDoc = await getDoc(userDocRef);
-
-                if (userDoc.exists()) {
-                    const data = userDoc.data();
-
-                    // 2. Vérifier le mot de passe (Simple vérification en clair)
-                    // ATTENTION: Le mot de passe est sensible à la casse
-                    if (data.password === password) { 
-                        // 3. Vérifier le bannissement
-                        if (data.banned) {
-                            errorMsg.textContent = 'Votre compte a été banni';
-                            return;
-                        }
-
-                        // Succès de la connexion
-                        currentUser = username;
-                        currentUserData = data;
-                        document.getElementById('loginScreen').classList.add('hide');
-                        document.getElementById('usernameDisplay').textContent = currentUser;
-
-                        // Initialisation de l'UI
-                        updateCaillouxDisplay();
-                        if (currentUserData.bestScore) {
-                            gameBestScore = currentUserData.bestScore;
-                            document.getElementById('gameBestScore').textContent = gameBestScore;
-                        }
-
-                        if (data.role === 'admin' || data.role === 'owner') {
-                            document.getElementById('adminLink').style.display = 'block';
-                        }
-                        
-                        if (data.role === 'owner') {
-                            document.getElementById('ownerSection').style.display = 'block';
-                            renderEmployeeList();
-                        }
-
-                        // Chargement des données asynchrones
-                        await fetchShopProducts();
-                        renderLibrary();
-                        renderLeaderboard();
-                        checkSalaries(); // Vérifier et payer les salaires
-
-                    } else {
-                        errorMsg.textContent = 'Nom d\'utilisateur ou mot de passe incorrect';
-                    }
-                } else {
-                    errorMsg.textContent = 'Utilisateur non trouvé. Cliquez sur "Créer un compte".';
-                }
-            } catch (e) {
-                console.error("Erreur de connexion:", e);
-                errorMsg.textContent = 'Une erreur est survenue lors de la connexion. (Voir console)';
-            }
-        }
-
-        // Nouvelle fonction pour l'inscription
-        window.signup = async function() {
-            const usernameInput = document.getElementById('username');
-            const password = document.getElementById('password').value;
-            const errorMsg = document.getElementById('errorMsg');
-
-            if (!usernameInput.value || !password) {
-                errorMsg.textContent = 'Veuillez remplir tous les champs';
-                return;
-            }
-            
-            // Convertir en majuscules pour une création d'utilisateur uniforme
-            const username = usernameInput.value.trim().toUpperCase();
-
-            try {
-                const userDocRef = doc(db, 'users', username);
-                const userDoc = await getDoc(userDocRef);
-                
-                if (userDoc.exists()) {
-                    errorMsg.textContent = 'Ce nom d\'utilisateur existe déjà. Veuillez vous connecter.';
-                    return;
-                }
-
-                // --- LOGIQUE ADMINISTRATEUR/PROPRIÉTAIRE CORRIGÉE ---
-                let role = 'user';
-                let cailloux = 50;
-
-                // Si l'utilisateur s'appelle HAR22FRA, il devient le propriétaire (Owner)
-                if (username === 'HAR22FRA') { // <--- CORRECTION APPLIQUÉE ICI
-                    role = 'owner';
-                    cailloux = 10000;
-                }
-                // --- FIN DU CORRECTIF ADMINISTRATEUR ---
-
-                // Création du nouvel utilisateur dans Firestore (MODULAIRE)
-                const newUser = {
-                    password: password, // Sauvegarde du mot de passe (sensible à la casse)
-                    role: role, 
-                    cailloux: cailloux, 
-                    library: [],
-                    banned: false,
-                    bestScore: 0,
-                };
-                
-                await setDoc(doc(db, 'users', username), newUser);
-                
-                errorMsg.textContent = 'Compte créé avec succès ! Vous êtes connecté(e) !';
-                
-                // Connexion automatique
-                currentUser = username;
-                currentUserData = newUser;
-                document.getElementById('loginScreen').classList.add('hide');
-                document.getElementById('usernameDisplay').textContent = currentUser;
-                updateCaillouxDisplay();
-
-                // Afficher le lien Admin/Owner si besoin
-                if (role === 'admin' || role === 'owner') {
-                    document.getElementById('adminLink').style.display = 'block';
-                }
-                
-                if (role === 'owner') {
-                    document.getElementById('ownerSection').style.display = 'block';
-                    renderEmployeeList();
-                }
-
-                await fetchShopProducts();
-                renderLibrary();
-                renderLeaderboard();
-                checkSalaries(); 
-            } catch (e) {
-                console.error("Erreur d'inscription:", e);
-                errorMsg.textContent = 'Une erreur est survenue lors de la création du compte. (Voir console)';
-            }
-        }
-
-
-        // --- Fonctions d'interface ---
-
-        window.updateCaillouxDisplay = function() {
-            if (currentUserData) {
-                document.getElementById('userCailloux').textContent = currentUserData.cailloux;
-            } else {
-                document.getElementById('userCailloux').textContent = '0';
-            }
-        }
-
-        window.showSection = function(sectionId) {
-            document.querySelectorAll('.section').forEach(section => {
-                section.classList.remove('active');
-            });
-            document.getElementById(sectionId).classList.add('active');
-
-            if (sectionId === 'admin') {
-                renderUserList();
-            }
-        }
-
-        // --- Fonctions de la Boutique (Produits) ---
-        function checkExpiredProducts() {
-            const now = Date.now();
-            shopProducts = shopProducts.filter(product => {
-                if (product.expiresAt && product.expiresAt < now) {
-                    return false;
-                }
-                return true;
-            });
-        }
-
-        // Charger les produits de la boutique depuis Firestore (MODULAIRE)
-        async function fetchShopProducts() {
-            try {
-                checkExpiredProducts();
-                const snapshot = await getDocs(productsCollectionRef);
-                shopProducts = snapshot.docs.map(doc => ({ id: doc.id, ...doc.data() }));
-                renderShop();
-            } catch (e) {
-                console.error("Erreur lors du chargement des produits:", e);
-            }
-        }
-
-        // Rendu de la boutique
-        function renderShop() {
-            checkExpiredProducts();
-            const grid = document.getElementById('shopGrid');
-            if (shopProducts.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-light);">Aucun produit disponible pour le moment</p>';
-                return;
-            }
-            grid.innerHTML = shopProducts.map(product => {
-                const daysLeft = product.expiresAt ? Math.ceil((product.expiresAt - Date.now()) / (1000 * 60 * 60 * 24)) : null;
-                return `
-                    <div class="product-card ${product.rarity}">
-                        <div class="rarity-badge ${product.rarity}">${product.rarity}</div>
-                        <div class="product-image">${product.emoji}</div>
-                        <div class="product-info">
-                            <div class="product-name">${product.name}</div>
-                            <div class="product-price">${product.price} 🪨</div>
-                            ${daysLeft ? `<div class="product-expires">Expire dans ${daysLeft} jours</div>` : ''}
-                            <button class="btn" onclick="buyProduct('${product.id}')">Acheter</button>
-                        </div>
-                    </div>
-                `;
-            }).join('');
-        }
-
-        // Achat de Produit (avec transaction Firestore MODULAIRE)
-        window.buyProduct = async function(productId) {
-            if (!currentUserData) return;
-            const product = shopProducts.find(p => p.id === productId);
-
-            if (!product) {
-                showModal('Erreur', 'Produit non trouvé');
-                return;
-            }
-
-            if (currentUserData.cailloux < product.price) {
-                showModal('Pas assez de cailloux', 'Vous n\'avez pas assez de cailloux pour acheter cet objet.');
-                return;
-            }
-
-            // Démarrer la transaction (MODULAIRE)
-            try {
-                await runTransaction(db, async (transaction) => {
-                    const userRef = doc(db, 'users', currentUser);
-                    const userDoc = await transaction.get(userRef);
-
-                    if (!userDoc.exists()) {
-                        throw "User document does not exist!";
-                    }
-
-                    const currentCailloux = userDoc.data().cailloux;
-                    if (currentCailloux < product.price) {
-                        throw "Not enough cailloux in database.";
-                    }
-
-                    const newCailloux = currentCailloux - product.price;
-                    const newLibrary = [...userDoc.data().library, {
-                        name: product.name,
-                        emoji: product.emoji,
-                        rarity: product.rarity
-                    }];
-
-                    transaction.update(userRef, {
-                        cailloux: newCailloux,
-                        library: newLibrary
-                    });
-
-                    // Mise à jour de l'état local après transaction réussie
-                    currentUserData.cailloux = newCailloux;
-                    currentUserData.library = newLibrary;
-                    updateCaillouxDisplay();
-                    renderLibrary();
-                    showModal('Achat réussi !', `Vous avez acheté ${product.emoji} ${product.name} !`);
-                });
-            } catch (e) {
-                console.error("Erreur dans la transaction d'achat:", e);
-                if (e === "User document does not exist!") return; // Erreur gérée localement
-                showModal('Erreur d\'achat', 'Une erreur est survenue lors de l\'achat. Veuillez réessayer.');
-            }
-        }
-
-        // Ouverture de Pack (avec transaction Firestore MODULAIRE)
-        window.openPack = async function(price) {
-            if (!currentUserData) return;
-            if (currentUserData.cailloux < price) {
-                showModal('Pas assez de cailloux', 'Vous n\'avez pas assez de cailloux pour ouvrir ce pack.');
-                return;
-            }
-
-            let rarity, rates;
-            if (price === 50) {
-                rates = [
-                    { rarity: 'nul', chance: 50 },
-                    { rarity: 'basique', chance: 30 },
-                    { rarity: 'rare', chance: 19 },
-                    { rarity: 'goat', chance: 1 }
-                ];
-            } else if (price === 100) {
-                rates = [
-                    { rarity: 'nul', chance: 30 },
-                    { rarity: 'basique', chance: 40 },
-                    { rarity: 'rare', chance: 25 },
-                    { rarity: 'goat', chance: 5 }
-                ];
-            } else { // 250
-                rates = [
-                    { rarity: 'nul', chance: 10 },
-                    { rarity: 'basique', chance: 30 },
-                    { rarity: 'rare', chance: 40 },
-                    { rarity: 'goat', chance: 20 }
-                ];
-            }
-
-            const rand = Math.random() * 100;
-            let cumulative = 0;
-            for (const rate of rates) {
-                cumulative += rate.chance;
-                if (rand <= cumulative) {
-                    rarity = rate.rarity;
-                    break;
-                }
-            }
-
-            const emojis = ['🎮', '🎨', '🎭', '🎪', '🎬', '🎤', '🎧', '🎯', '🎲', '🎳', '🎸', '🎹', '🎺', '🎻', '🎼', '🏀', '⚽', '🏈', '⚾', '🎾', '🏐', '🏉', '🎱', '🏓', '🏸', '🥊', '🥋', '🥅', '⛳', '🏎️', '🏍️', '🚲', '🛴', '🛹', '🛼', '🚊', '🚂', '🚆', '🚇', '🚈', '🚉', '🚌', '🚍', '🚎', '🚐', '🚑', '🚒', '🚓', '🚔', '🚕', '🚖', '🚗', '🚘', '🚙', '🚚', '🚛', '🚜', '🚢', '⛴️', '🛥️', '🚤', '🛶', '⛵', '🚁', '🛩️', '✈️', '🛫', '🛬', '🚀', '🛰️', '🔔', '🔕', '📢', '📣', '💬', '💭', '🗯️', '🎰', '🃏', '🀄', '🎴', '🕰️', '⌛', '⏳', '⌚', '📱', '📲', '💻', '🖥️', '⌨️', '🖱️', '🖲️', '💽', '💾', '💿', '📀', '📸', '📷', '📹', '🎥', '💡', '🔦', '🏮', '🕯️', '🗑️', '🛢️', '💸', '💰', '💳', '📧', '✉️', '📩', '📨', '📫', '📪', '📬', '📭', '📦', '📫', '📪', '📬', '📭', '📦', '📫', '📪', '📬', '📭', '📦', '📫', '📪', '📬', '📭', '📦'];
-            const names = ['Caillou Rare', 'Pierre Précieuse', 'Fragment Antique', 'Jeton Secret', 'Éclat Brillant', 'Morceau de Météore', 'Pépite d\'Or', 'Trésor Caché', 'Sphère Mystique', 'Artefact Oublié'];
-            
-            const item = {
-                name: names[Math.floor(Math.random() * names.length)],
-                emoji: emojis[Math.floor(Math.random() * emojis.length)],
-                rarity: rarity
-            };
-
-            // Démarrer la transaction (MODULAIRE)
-            try {
-                await runTransaction(db, async (transaction) => {
-                    const userRef = doc(db, 'users', currentUser);
-                    const userDoc = await transaction.get(userRef);
-
-                    if (!userDoc.exists()) {
-                        throw "User document does not exist!";
-                    }
-
-                    const currentCailloux = userDoc.data().cailloux;
-                    if (currentCailloux < price) {
-                        throw "Not enough cailloux in database.";
-                    }
-
-                    const newCailloux = currentCailloux - price;
-                    const newLibrary = [...userDoc.data().library, item];
-
-                    transaction.update(userRef, {
-                        cailloux: newCailloux,
-                        library: newLibrary
-                    });
-
-                    // Mise à jour de l'état local après transaction réussie
-                    currentUserData.cailloux = newCailloux;
-                    currentUserData.library = newLibrary;
-                    updateCaillouxDisplay();
-                    renderLibrary();
-                    const rarityEmojis = { 'nul': '🔘', 'basique': '🔵', 'rare': '🟣', 'goat': '🟡' };
-                    showModal('Pack ouvert !', `Vous avez obtenu : ${rarityEmojis[rarity]} ${item.emoji} ${item.name} !`);
-                });
-            } catch (e) {
-                console.error("Erreur dans la transaction d'ouverture de pack:", e);
-                if (e === "User document does not exist!") return;
-                showModal('Erreur d\'ouverture de pack', 'Une erreur est survenue. Veuillez réessayer.');
-            }
-        }
-
-        // Rendu de la Bibliothèque
-        let currentFilter = 'all';
-
-        window.filterLibrary = function(rarity) {
-            currentFilter = rarity;
-            document.querySelectorAll('.library-tab').forEach(tab => tab.classList.remove('active'));
-            const targetButton = event ? event.currentTarget : document.querySelector(`.library-tab[onclick="filterLibrary('${rarity}')"]`) || document.querySelector('.library-tab');
-            if (targetButton) {
-                targetButton.classList.add('active');
-            }
-            renderLibrary();
-        }
-
-        window.renderLibrary = function() {
-            if (!currentUserData) return;
-            const grid = document.getElementById('libraryGrid');
-            let items = currentUserData.library;
-
-            if (currentFilter !== 'all') {
-                items = items.filter(item => item.rarity === currentFilter);
-            }
-
-            // Tri par rareté
-            const rarityOrder = { 'goat': 0, 'rare': 1, 'basique': 2, 'nul': 3 };
-            items.sort((a, b) => rarityOrder[a.rarity] - rarityOrder[b.rarity]);
-
-            if (items.length === 0) {
-                grid.innerHTML = '<p style="grid-column: 1/-1; text-align: center; color: var(--text-light);">Aucun objet dans votre bibliothèque</p>';
-                return;
-            }
-
-            grid.innerHTML = items.map((item, index) => `
-                <div class="product-card ${item.rarity}">
-                    <div class="rarity-badge ${item.rarity}">${item.rarity}</div>
-                    <div class="product-image">${item.emoji}</div>
-                    <div class="product-info">
-                        <div class="product-name">${item.name}</div>
-                    </div>
-                </div>
-            `).join('');
-        }
-
-        // Rendu du Classement (Lecture de tous les utilisateurs - MODULAIRE)
-        window.renderLeaderboard = async function() {
-            try {
-                const q = query(
-                    usersCollectionRef, 
-                    where('banned', '==', false), 
-                    orderBy('cailloux', 'desc'), 
-                    limit(3)
-                );
-                const snapshot = await getDocs(q);
-                const leaderboard = snapshot.docs.map(doc => ({ username: doc.id, cailloux: doc.data().cailloux }));
-                
-                const list = document.getElementById('leaderboardList');
-                const ranks = ['first', 'second', 'third'];
-
-                list.innerHTML = leaderboard.map((data, index) => `
-                    <div class="leaderboard-item ${ranks[index]}">
-                        <div class="leaderboard-rank">#${index + 1}</div>
-                        <div class="leaderboard-name">${data.username}</div>
-                        <div class="leaderboard-cailloux">${data.cailloux} 🪨</div>
-                    </div>
-                `).join('');
-            } catch (e) {
-                console.error("Erreur lors du chargement du classement:", e);
-            }
-        }
-
-
-        // --- Fonctions Admin (Produits et Utilisateurs) ---
-
-        // Ajouter un Produit (Admin/Owner - MODULAIRE)
-        window.addProduct = async function() {
-            if (!currentUserData || (currentUserData.role !== 'admin' && currentUserData.role !== 'owner')) return;
-            const name = document.getElementById('productName').value;
-            const emoji = document.getElementById('productEmoji').value;
-            const price = parseInt(document.getElementById('productPrice').value);
-            const rarity = document.getElementById('productRarity').value;
-            const durationDays = document.getElementById('productDuration').value;
-
-            if (!name || !emoji || isNaN(price) || price <= 0 || !rarity) {
-                showModal('Erreur', 'Veuillez remplir tous les champs correctement.');
-                return;
-            }
-
-            let expiresAt = null;
-            if (durationDays && !isNaN(parseInt(durationDays))) {
-                const durationMs = parseInt(durationDays) * 24 * 60 * 60 * 1000;
-                expiresAt = Date.now() + durationMs;
-            }
-
-            try {
-                const newDocRef = doc(productsCollectionRef); // Création d'une référence sans ID
-                const product = { name, emoji, price, rarity, expiresAt };
-                await setDoc(newDocRef, product); // Envoi du produit
-                fetchShopProducts(); // Recharger la boutique
-                
-                document.getElementById('productName').value = '';
-                document.getElementById('productEmoji').value = '';
-                document.getElementById('productPrice').value = '';
-                document.getElementById('productDuration').value = '7';
-                showModal('Produit ajouté', 'Le produit a été ajouté à la boutique !');
-            } catch (e) {
-                console.error("Erreur lors de l'ajout du produit:", e);
-                showModal('Erreur', "Impossible d'ajouter le produit.");
-            }
-        }
-
-        // Ajouter un Employé (Owner seulement - MODULAIRE)
-        window.addEmployee = async function() {
-            if (!currentUserData || currentUserData.role !== 'owner') return;
-            const name = document.getElementById('employeeName').value.trim().toUpperCase();
-            const password = document.getElementById('employeePassword').value;
-            const salary = parseInt(document.getElementById('employeeSalary').value);
-            const role = document.getElementById('employeeRole').value;
-
-            if (!name || !password || !salary) {
-                showModal('Erreur', 'Veuillez remplir tous les champs');
-                return;
-            }
-
-            try {
-                const userDocRef = doc(db, 'users', name);
-                const userDoc = await getDoc(userDocRef);
-                
-                if (userDoc.exists()) {
-                    showModal('Erreur', 'Cet utilisateur existe déjà');
-                    return;
-                }
-
-                await setDoc(userDocRef, {
-                    password,
-                    role,
-                    cailloux: 0,
-                    library: [],
-                    banned: false,
-                    salary // Ce champ est la clé pour être considéré comme employé
-                });
-                renderEmployeeList();
-                document.getElementById('employeeName').value = '';
-                document.getElementById('employeePassword').value = '';
-                document.getElementById('employeeSalary').value = '500';
-                showModal('Employé ajouté', `${name} a été ajouté avec succès !`);
-            } catch (e) {
-                console.error("Erreur lors de l'ajout de l'employé:", e);
-                showModal('Erreur', "Impossible d'ajouter l'employé.");
-            }
-        }
-
-        // Rendu de la Liste des Employés (MODULAIRE)
-        window.renderEmployeeList = async function() {
-            if (!currentUserData || currentUserData.role !== 'owner') return;
-            const list = document.getElementById('employeeList');
-            try {
-                // Chercher tous les utilisateurs ayant un champ 'salary' (MODULAIRE)
-                const q = query(usersCollectionRef, where('salary', '>', 0));
-                const snapshot = await getDocs(q);
-                
-                const employees = snapshot.docs
-                    .filter(doc => doc.id !== currentUser) // Exclure l'Owner actuel
-                    .map(doc => ({ username: doc.id, ...doc.data() }));
-
-                list.innerHTML = employees.map(data => `
-                    <div class="user-item">
-                        <div>
-                            <strong>${data.username}</strong> - ${data.salary} 🪨/mois
-                        </div>
-                    </div>
-                `).join('');
-            } catch (e) {
-                console.error("Erreur lors du chargement de la liste des employés:", e);
-            }
-        }
-
-
-        // Rendu de la Liste des Utilisateurs (pour l'admin/owner - MODULAIRE)
-        window.renderUserList = async function() {
-            if (!currentUserData || (currentUserData.role !== 'admin' && currentUserData.role !== 'owner')) return;
-            const list = document.getElementById('userList');
-            try {
-                const snapshot = await getDocs(usersCollectionRef);
-                const userList = snapshot.docs
-                    .filter(doc => {
-                        const username = doc.id;
-                        // Un Admin ne peut pas modifier un Owner
-                        if (currentUserData.role === 'admin') {
-                            return doc.data().role !== 'owner' && username !== currentUser;
-                        } else {
-                            // Un Owner peut tout voir sauf lui-même
-                            return username !== currentUser;
-                        }
-                    })
-                    .map(doc => ({ username: doc.id, ...doc.data() }));
-
-                list.innerHTML = userList.map(data => `
-                    <div class="user-item">
-                        <div>
-                            <strong>${data.username}</strong> - ${data.cailloux} 🪨 ${data.banned ? '(Banni)' : ''} 
-                        </div>
-                        <button class="btn ${data.banned ? 'btn-secondary' : 'btn-danger'}" style="width: auto;" onclick="toggleBan('${data.username}')">
-                            ${data.banned ? 'Débannir' : 'Bannir'}
-                        </button>
-                    </div>
-                `).join('');
-            } catch (e) {
-                console.error("Erreur lors du chargement de la liste des utilisateurs:", e);
-            }
-        }
-
-        // Basculer le Bannissement (MODULAIRE)
-        window.toggleBan = async function(username) {
-            if (!currentUserData) return;
-            const userDocRef = doc(db, 'users', username);
-            const userDoc = await getDoc(userDocRef);
-            if (!userDoc.exists()) return;
+    <div style="text-align: center; margin-bottom: 2rem;">
+      <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">🎁 Ouvrir des Packs</h3>
+      <div style="display: flex; flex-wrap: wrap; gap: 1rem; justify-content: center;">
+        <button onclick="ouvrirPack('basique')" class="btn-primary" style="padding: 1rem 1.5rem; border-radius: 0.5rem; font-size: 1rem;">
+          📦 Pack Basique - 100 cailloux
+        </button>
+        <button onclick="ouvrirPack('rare')" class="btn-primary" style="padding: 1rem 1.5rem; border-radius: 0.5rem; font-size: 1rem; background: #9945ff;">
+          💎 Pack Rare - 500 cailloux
+        </button>
+        <button onclick="ouvrirPack('goat')" class="btn-primary" style="padding: 1rem 1.5rem; border-radius: 0.5rem; font-size: 1rem; background: #FFD700; color: #000;">
+          👑 Pack GOAT - 2000 cailloux
+        </button>
+      </div>
+      <p style="color: #FFD700; margin-top: 0.5rem; font-size: 0.875rem;">Taux de drop: Nul 50% | Basique 30% | Rare 19% | GOAT 1%</p>
+    </div>
+
+    <div id="articles-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 1.5rem;"></div>
+  </section>
+
+  <!-- Section Panier -->
+  <section id="panier" class="section">
+    <h2 class="gold-text" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">🛒 Votre panier</h2>
+
+    <!-- Login Section -->
+    <div id="login-section" style="margin-bottom: 2rem;">
+      <div class="card" style="padding: 2rem; text-align: center;">
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">🔍 Connexion rapide par QR Code</h3>
+        <p style="color: #FFD700; margin-bottom: 1.5rem;">Scannez votre QR code personnel pour vous connecter automatiquement !</p>
+        <button onclick="startQRScanner()" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 50px; font-size: 1rem;">
+          📷 Scanner QR Code
+        </button>
+      </div>
+
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <div style="display: flex; gap: 1rem; justify-content: center;">
+          <button onclick="toggleClassicLogin()" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.5rem;">
+            🔑 Connexion
+          </button>
+          <button onclick="toggleSignup()" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.5rem;">
+            ✨ Créer un compte
+          </button>
+        </div>
+
+        <form id="classic-login-form" style="display: none; margin-top: 1rem; max-width: 400px; margin-left: auto; margin-right: auto;" class="card" onsubmit="handleClassicLogin(event)">
+          <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            <h3 class="gold-text" style="text-align: center; margin-bottom: 0.5rem;">🔑 Connexion</h3>
+            <input name="identifiant" type="text" placeholder="Identifiant" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <input name="motDePasse" type="password" placeholder="Mot de passe" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem;">Se connecter</button>
+            <div id="login-error" style="color: #ff6b6b; font-size: 0.875rem;"></div>
+          </div>
+        </form>
+
+        <form id="signup-form" style="display: none; margin-top: 1rem; max-width: 400px; margin-left: auto; margin-right: auto;" class="card" onsubmit="handleSignup(event)">
+          <div style="padding: 1.5rem; display: flex; flex-direction: column; gap: 1rem;">
+            <h3 class="gold-text" style="text-align: center; margin-bottom: 0.5rem;">✨ Créer un compte</h3>
+            <input name="identifiant" type="text" placeholder="Identifiant (MAJUSCULES)" required pattern="[A-Z]+" title="Uniquement des lettres majuscules" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <input name="email" type="email" placeholder="Email" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <input name="motDePasse" type="password" placeholder="Mot de passe (min. 4 caractères)" required minlength="4" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <input name="confirmMotDePasse" type="password" placeholder="Confirmer le mot de passe" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <button type="submit" class="btn-primary" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem;">Créer mon compte</button>
+            <div id="signup-error" style="color: #ff6b6b; font-size: 0.875rem;"></div>
+            <div id="signup-success" style="color: #51cf66; font-size: 0.875rem;"></div>
+          </div>
+        </form>
+      </div>
+    </div>
+
+    <!-- QR Scanner Overlay -->
+    <div id="qr-scanner-overlay" style="display: none;" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="gold-text" style="margin-bottom: 1.5rem; text-align: center; font-size: 1.5rem;">🔍 Scanner votre QR Code</h3>
+        <div style="position: relative; width: 100%; max-width: 400px; margin: 0 auto 1.5rem;">
+          <div style="position: relative; border: 4px solid #51cf66; border-radius: 15px; overflow: hidden; aspect-ratio: 1;">
+            <video id="qr-video" autoplay playsinline style="width: 100%; height: 100%; object-fit: cover;"></video>
+            <canvas id="qr-canvas" style="display: none;"></canvas>
+          </div>
+        </div>
+        <p id="scan-message" style="text-align: center; color: #FFD700; font-weight: 600; margin-bottom: 1rem;">Initialisation...</p>
+        <button onclick="stopQRScanner()" class="btn-primary" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; background: #8B0000;">
+          ❌ Fermer
+        </button>
+      </div>
+    </div>
+
+    <!-- QR Code Verification Overlay -->
+    <div id="qr-code-verification-overlay" style="display: none;" class="modal-overlay">
+      <div class="modal-content">
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">🔒 Vérification du code secret</h3>
+        <p id="qr-user-prompt" style="color: #FFD700; margin-bottom: 1.5rem;">Veuillez entrer votre code secret.</p>
+        <form id="qr-verify-form" onsubmit="handleQRVerify(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+          <input type="password" id="qr-secret-code" placeholder="Code Secret" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+          <button type="submit" class="btn-primary" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem;">Valider le Code</button>
+          <div id="qr-verify-error" style="color: #ff6b6b; font-size: 0.875rem;"></div>
+        </form>
+        <button onclick="cancelQRVerify()" class="btn-primary" style="width: 100%; margin-top: 1rem; padding: 0.5rem; border-radius: 0.5rem; background: #8B0000;">
+          ❌ Annuler
+        </button>
+      </div>
+    </div>
+
+    <!-- User Dashboard -->
+    <div id="user-dashboard" style="display: none; margin-bottom: 2rem;">
+      <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+        <div style="display: flex; flex-direction: column; gap: 1rem;">
+          <div style="color: #FFD700;">
+            <p style="font-size: 1.125rem;">✅ Connecté en tant que: <strong id="user-name" class="gold-text"></strong></p>
+            <p style="font-size: 1.125rem;">💰 Solde: <strong id="user-balance" class="gold-text"></strong> cailloux</p>
+          </div>
+          <button onclick="logout()" class="btn-primary" style="padding: 0.5rem 1rem; border-radius: 0.5rem; background: #8B0000;">
+            🚪 Déconnexion
+          </button>
+        </div>
+      </div>
+
+      <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+        <h3 class="gold-text" style="font-size: 1.25rem; margin-bottom: 1rem;">💸 Envoyer des cailloux</h3>
+        <form onsubmit="envoyerCailloux(event)" style="display: flex; flex-direction: column; gap: 0.75rem;">
+          <input name="destinataire" type="text" placeholder="Identifiant du destinataire" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+          <input name="montant" type="number" placeholder="Montant" min="1" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+          <button type="submit" class="btn-primary" style="padding: 0.5rem 1rem; border-radius: 0.5rem;">Envoyer</button>
+        </form>
+      </div>
+
+      <div class="card" style="padding: 1.5rem; margin-bottom: 1.5rem;">
+        <h3 class="gold-text" style="font-size: 1.25rem; margin-bottom: 1rem;">🎫 Code Créateur</h3>
+        <input type="text" placeholder="Entrez le code créateur" onkeypress="handleCodeInput(event)" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        <div id="code-success" style="display: none; margin-top: 0.75rem; color: #51cf66; font-weight: bold;"></div>
+      </div>
+    </div>
+
+    <!-- Cart Content -->
+    <div class="card" style="padding: 2rem;">
+      <div style="display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem;">
+        <h3 class="gold-text" style="font-size: 1.5rem;">🛒 Articles dans le panier</h3>
+        <button id="clear-cart-button" onclick="viderPanier()" style="display: none; padding: 0.5rem 1rem; border-radius: 0.5rem; background: #8B0000; color: #FFD700; border: 1px solid #FFD700; cursor: pointer;">
+          🗑️ Vider
+        </button>
+      </div>
+      <div id="empty-cart" style="text-align: center; color: rgba(255, 215, 0, 0.7); font-style: italic; padding: 2rem;">Votre panier est vide</div>
+      <ul id="liste-panier" style="display: none; list-style: none; margin-bottom: 1.5rem;"></ul>
+      <p id="total-panier" style="display: none; font-size: 1.5rem; font-weight: bold; color: #FFD700; text-align: center; margin-bottom: 1.5rem;">Total : 0 cailloux</p>
+      <button id="buy-button" onclick="acheter()" style="display: none; width: 100%; padding: 1rem; border-radius: 50px; background: #8B7355; color: #FFD700; border: 2px solid #FFD700; font-weight: bold; font-size: 1.125rem; cursor: pointer;">
+        💳 Acheter
+      </button>
+    </div>
+
+    <!-- Historique des commandes -->
+    <div id="order-history" style="display: none; margin-top: 2rem;" class="card">
+      <div style="padding: 2rem;">
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1.5rem;">📜 Historique de vos commandes</h3>
+        <div id="history-list"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Bibliothèque -->
+  <section id="bibliotheque" class="section">
+    <h2 class="gold-text" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">📚 Ma Bibliothèque</h2>
+    
+    <div id="bibliotheque-login-required" class="card" style="padding: 2rem; text-align: center;">
+      <p style="color: #FFD700; font-size: 1.125rem; margin-bottom: 1rem;">Connectez-vous pour accéder à votre bibliothèque !</p>
+      <button onclick="showSection('panier')" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.5rem;">
+        Se connecter
+      </button>
+    </div>
+
+    <div id="bibliotheque-content" style="display: none;">
+      <div style="margin-bottom: 2rem; text-align: center;">
+        <p style="color: #FFD700; font-size: 1.125rem;">Total d'objets: <strong id="total-objets" class="gold-text">0</strong></p>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">🏆 GOAT</h3>
+        <div id="goat-items" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;"></div>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">💎 Rare</h3>
+        <div id="rare-items" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;"></div>
+      </div>
+
+      <div style="margin-bottom: 2rem;">
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">⭐ Basique</h3>
+        <div id="basique-items" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;"></div>
+      </div>
+
+      <div>
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">📦 Nul</h3>
+        <div id="nul-items" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 1rem;"></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Classement -->
+  <section id="classement" class="section">
+    <h2 class="gold-text" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">🏆 Classement des Plus Riches</h2>
+    
+    <div class="card" style="padding: 2rem;">
+      <div id="classement-podium" style="display: flex; flex-direction: column; gap: 1.5rem;"></div>
+    </div>
+  </section>
+
+  <!-- Section Jeu -->
+  <section id="jeu" class="section">
+    <h2 class="gold-text" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">🎮 Geometry Dash</h2>
+    
+    <div id="jeu-login-required" class="card" style="padding: 2rem; text-align: center;">
+      <p style="color: #FFD700; font-size: 1.125rem; margin-bottom: 1rem;">Connectez-vous pour jouer et gagner des cailloux !</p>
+      <button onclick="showSection('panier')" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.5rem;">
+        Se connecter
+      </button>
+    </div>
+
+    <div id="jeu-content" style="display: none;">
+      <div class="card" style="padding: 2rem; margin-bottom: 2rem; text-align: center;">
+        <p style="color: #FFD700; font-size: 1.125rem; margin-bottom: 0.5rem;">Gagnez <strong class="gold-text">1 caillou</strong> toutes les 10 secondes tant que vous êtes en vie !</p>
+        <p style="color: #FFD700; font-size: 1rem;">Appuyez sur ESPACE ou cliquez pour sauter</p>
+      </div>
+
+      <div style="text-align: center; margin-bottom: 1rem;">
+        <p style="color: #FFD700; font-size: 1.25rem;">Score: <strong id="game-score" class="gold-text">0</strong> | Cailloux gagnés: <strong id="game-earnings" class="gold-text">0</strong></p>
+      </div>
+
+      <canvas id="game-canvas" width="800" height="400"></canvas>
+
+      <div style="text-align: center; margin-top: 1.5rem;">
+        <button id="start-game-btn" onclick="startGame()" class="btn-primary" style="padding: 1rem 2rem; border-radius: 0.5rem; font-size: 1.125rem;">
+          ▶️ Démarrer le Jeu
+        </button>
+        <button id="restart-game-btn" onclick="restartGame()" style="display: none; padding: 1rem 2rem; border-radius: 0.5rem; font-size: 1.125rem; background: #8B0000; color: #FFD700; border: 2px solid #FFD700; font-weight: bold; cursor: pointer;">
+          🔄 Rejouer
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Messages -->
+  <section id="messages" class="section">
+    <h2 class="gold-text" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">💬 Messages</h2>
+
+    <div id="messages-login-required" class="card" style="padding: 2rem; text-align: center;">
+      <p style="color: #FFD700; font-size: 1.125rem; margin-bottom: 1rem;">Connectez-vous pour accéder à la messagerie !</p>
+      <button onclick="showSection('panier')" class="btn-primary" style="padding: 0.75rem 1.5rem; border-radius: 0.5rem;">
+        Se connecter
+      </button>
+    </div>
+
+    <div id="messages-interface" style="display: none;">
+      <div class="card" style="padding: 1rem;">
+        <p style="color: #FFD700; text-align: center;">Messagerie disponible prochainement...</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- Section Admin -->
+  <section id="admin" class="section">
+    <h1 class="gold-text" style="text-align: center; font-size: 2.5rem; margin-bottom: 2rem;">⚙️ Panneau Administrateur</h1>
+
+    <!-- Gestion des cailloux -->
+    <div class="card" style="padding: 2rem; margin-bottom: 2rem;">
+      <h2 class="gold-text" style="font-size: 1.75rem; margin-bottom: 1.5rem;">💰 Gestion des Cailloux</h2>
+
+      <form onsubmit="ajouterCailloux(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Utilisateur</label>
+          <input type="text" name="username" placeholder="Nom d'utilisateur (ex: MAXIME)" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Montant (positif pour ajouter, négatif pour retirer)</label>
+          <input type="number" name="montant" placeholder="Ex: 1000 ou -500" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.125rem;">
+          💸 Modifier le solde
+        </button>
+      </form>
+    </div>
+
+    <!-- Gestion des produits -->
+    <div class="card" style="padding: 2rem; margin-bottom: 2rem;">
+      <h2 class="gold-text" style="font-size: 1.75rem; margin-bottom: 1.5rem;">📦 Ajouter un Produit</h2>
+
+      <form onsubmit="ajouterProduit(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Nom du produit</label>
+          <input type="text" name="nom" placeholder="Ex: Super Stylo" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Prix (en cailloux)</label>
+          <input type="number" name="prix" placeholder="Ex: 50" min="1" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Type</label>
+          <select name="type" onchange="toggleImageUrl(this.value)" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <option value="emoji">Emoji</option>
+            <option value="image">Image</option>
+          </select>
+        </div>
+
+        <div id="emoji-input">
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Emoji</label>
+          <input type="text" name="emoji" placeholder="Ex: 🎨" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <div id="image-input" style="display: none;">
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">URL de l'image</label>
+          <input type="url" name="imageUrl" placeholder="https://..." style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Rareté</label>
+          <select name="rareté" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+            <option value="nul">Nul</option>
+            <option value="basique">Basique</option>
+            <option value="rare">Rare</option>
+            <option value="goat">GOAT</option>
+          </select>
+        </div>
+
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Durée de disponibilité (heures, 0 = permanent)</label>
+          <input type="number" name="duree" placeholder="Ex: 24" min="0" value="0" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.125rem;">
+          ➕ Ajouter le produit
+        </button>
+      </form>
+    </div>
+
+    <!-- Gestion des utilisateurs -->
+    <div class="card" style="padding: 2rem; margin-bottom: 2rem;" id="admin-ban-section">
+      <h2 class="gold-text" style="font-size: 1.75rem; margin-bottom: 1.5rem;">🚫 Bannir un Utilisateur</h2>
+
+      <form onsubmit="bannirUtilisateur(event)" style="display: flex; flex-direction: column; gap: 1rem;">
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Utilisateur à bannir</label>
+          <input type="text" name="username" placeholder="Nom d'utilisateur" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.125rem; background: #8B0000;">
+          🚫 Bannir
+        </button>
+      </form>
+
+      <div style="margin-top: 1.5rem;">
+        <h3 class="gold-text" style="font-size: 1.25rem; margin-bottom: 1rem;">Liste des bannis</h3>
+        <div id="banned-list" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+      </div>
+    </div>
+
+    <!-- Gestion des salaires (HARMAN uniquement) -->
+    <div class="card" style="padding: 2rem;" id="admin-salary-section">
+      <h2 class="gold-text" style="font-size: 1.75rem; margin-bottom: 1.5rem;">💼 Gestion des Salaires</h2>
+
+      <form onsubmit="ajouterSalarie(event)" style="display: flex; flex-direction: column; gap: 1rem; margin-bottom: 2rem;">
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Utilisateur</label>
+          <input type="text" name="username" placeholder="Nom d'utilisateur" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <div>
+          <label style="display: block; color: #FFD700; font-weight: 600; margin-bottom: 0.5rem;">Salaire mensuel (cailloux)</label>
+          <input type="number" name="salaire" placeholder="Ex: 1900" min="1" required style="width: 100%; padding: 0.5rem; border-radius: 0.5rem; border: 1px solid #FFD700; background: rgba(0,0,0,0.3); color: #FFD700; font-size: 16px;">
+        </div>
+
+        <button type="submit" class="btn-primary" style="width: 100%; padding: 0.75rem; border-radius: 0.5rem; font-size: 1.125rem;">
+          ➕ Ajouter un salarié
+        </button>
+      </form>
+
+      <div>
+        <h3 class="gold-text" style="font-size: 1.25rem; margin-bottom: 1rem;">Liste des salariés</h3>
+        <p style="color: #FFD700; font-size: 0.875rem; margin-bottom: 1rem;">Les salaires sont versés automatiquement le 28 de chaque mois</p>
+        <div id="salary-list" style="display: flex; flex-direction: column; gap: 0.5rem;"></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer style="padding: 1.5rem; text-align: center;">
+  <div style="max-width: 1280px; margin: 0 auto; padding: 0 1rem;">
+    <p style="color: rgba(255, 215, 0, 0.6); font-size: 0.875rem; margin-bottom: 0.5rem;">
+      💻 Développé par <strong style="color: rgba(255, 215, 0, 0.9);">har22fra (Harman Singh)</strong>
+    </p>
+    <p style="color: rgba(255, 215, 0, 0.5); font-size: 0.75rem;">
+      📜 Ce site est sous licence <a href="https://opensource.org/licenses/MIT" target="_blank" style="color: #FFD700; text-decoration: underline;">MIT License</a> - © 2025
+    </p>
+  </div>
+</footer>
+
+<script>
+// Firebase Configuration
+const firebaseConfig = {
+  apiKey: "AIzaSyBKHf8RQaKwPGPYZ6BNPKkGkF7v7YPkCbo",
+  authDomain: "harman-shop.firebaseapp.com",
+  projectId: "harman-shop",
+  storageBucket: "harman-shop.firebasestorage.app",
+  messagingSenderId: "990698016430",
+  appId: "1:990698016430:web:3aa19cfa6dfedd8c72db2e"
+};
+
+firebase.initializeApp(firebaseConfig);
+const db = firebase.firestore();
+
+// Global Variables
+let currentUser = null;
+let panier = [];
+let articles = [];
+let utilisateurs = {};
+let bannedUsers = [];
+let salaries = {};
+
+// Utilisateurs par défaut avec codes QR
+const defaultUsers = {
+  'HARMAN': { solde: 100000000000, motDePasse: '1234', qrCode: '220112', isAdmin: true, canManageSalaries: true },
+  'ADMIN': { solde: 999999999999, motDePasse: 'Dasntesreve', qrCode: '000000', isAdmin: true, canManageSalaries: false },
+  'CAMILLE': { solde: 10, motDePasse: 'fille', qrCode: '429203', isAdmin: true, canManageSalaries: false },
+  'ALEXANDRE': { solde: 100000000, motDePasse: 'bonjour', qrCode: '123456' },
+  'MAXIME': { solde: 10, motDePasse: 'football', qrCode: '654321' },
+  'GABRIEL': { solde: 10, motDePasse: 'con', qrCode: '111111' }
+};
+
+// Codes promo
+const codesPromo = {
+  'OUI': 10,
+  'UNCHAINED': 10,
+  'CAMILLE': 20,
+  'JOLIPASCHER2025': 30,
+  'HARMANLEBG': 40,
+  'FRANKLEBOEUF': 99
+};
+
+// Initialize
+setTimeout(() => {
+  document.getElementById('loading-screen').style.display = 'none';
+}, 5000);
+
+initFirebase();
+
+async function initFirebase() {
+  try {
+    // Charger les utilisateurs
+    const usersSnapshot = await db.collection('utilisateurs').get();
+    usersSnapshot.forEach(doc => {
+      utilisateurs[doc.id] = doc.data();
+    });
+
+    // Ajouter les utilisateurs par défaut s'ils n'existent pas
+    for (const [username, data] of Object.entries(defaultUsers)) {
+      if (!utilisateurs[username]) {
+        await db.collection('utilisateurs').doc(username).set({
+          solde: data.solde,
+          motDePasse: data.motDePasse,
+          email: '',
+          emailVerifie: false,
+          createdAt: new Date()
+        });
+        utilisateurs[username] = data;
+      }
+    }
+
+    // Charger les articles
+    const articlesSnapshot = await db.collection('articles').get();
+    articlesSnapshot.forEach(doc => {
+      articles.push({ id: doc.id, ...doc.data() });
+    });
+
+    // Charger les utilisateurs bannis
+    const bannedSnapshot = await db.collection('banned').get();
+    bannedSnapshot.forEach(doc => {
+      bannedUsers.push(doc.id);
+    });
+
+    // Charger les salariés
+    const salariesSnapshot = await db.collection('salaries').get();
+    salariesSnapshot.forEach(doc => {
+      salaries[doc.id] = doc.data();
+    });
+
+    // Initialiser les salariés par défaut
+    if (!salaries['CAMILLE']) {
+      await db.collection('salaries').doc('CAMILLE').set({
+        salaire: 1900,
+        dernierVersement: null
+      });
+      salaries['CAMILLE'] = { salaire: 1900, dernierVersement: null };
+    }
+
+    afficherArticles();
+    verifierSalaires();
+  } catch (error) {
+    console.error('Erreur Firebase:', error);
+  }
+}
+
+// Vérifier et verser les salaires
+async function verifierSalaires() {
+  const now = new Date();
+  const jour = now.getDate();
+  
+  if (jour === 28) {
+    for (const [username, data] of Object.entries(salaries)) {
+      const dernierVersement = data.dernierVersement ? new Date(data.dernierVersement) : null;
+      
+      // Vérifier si le salaire n'a pas déjà été versé ce mois-ci
+      if (!dernierVersement || dernierVersement.getMonth() !== now.getMonth()) {
+        try {
+          const userDoc = await db.collection('utilisateurs').doc(username).get();
+          if (userDoc.exists) {
             const userData = userDoc.data();
-
-            if (currentUserData.role === 'admin' && userData.role === 'owner') {
-                showModal('Erreur', 'Vous ne pouvez pas bannir le propriétaire');
-                return;
-            }
-
-            const isBanned = !userData.banned;
-            try {
-                await updateDoc(userDocRef, { banned: isBanned });
-                renderUserList();
-                renderLeaderboard();
-                showModal(isBanned ? 'Utilisateur banni' : 'Utilisateur débanni', `${username} a été ${isBanned ? 'banni' : 'débanni'} avec succès.`);
-            } catch (e) {
-                console.error("Erreur lors du bannissement:", e);
-            }
-        }
-
-        // Vérifier et payer les salaires (MODULAIRE)
-        window.checkSalaries = function() {
-            const currentMonth = new Date().getMonth();
-            const lastPayday = localStorage.getItem('lastPayday');
-
-            if (lastPayday && parseInt(lastPayday) === currentMonth) {
-                console.log("Les salaires ont déjà été payés ce mois-ci.");
-                return;
-            }
-
-            const batch = writeBatch(db); // Utilisation de writeBatch modulaire
-            const employeesQuery = query(usersCollectionRef, where('salary', '>', 0));
-            
-            getDocs(employeesQuery)
-            .then(snapshot => {
-                snapshot.forEach(docSnapshot => {
-                    const data = docSnapshot.data();
-                    const docRef = doc(db, 'users', docSnapshot.id);
-                    // Utilisation de FieldValue.increment modulaire
-                    batch.update(docRef, { cailloux: increment(data.salary) });
-
-                    // Si c'est l'utilisateur actuel, mettre à jour les données locales
-                    if (docSnapshot.id === currentUser) {
-                        currentUserData.cailloux += data.salary;
-                        updateCaillouxDisplay();
-                    }
-                });
-                return batch.commit();
-            })
-            .then(() => {
-                localStorage.setItem('lastPayday', currentMonth);
-                console.log("Paiement des salaires effectué pour tous les employés !");
-                renderLeaderboard();
-                // Afficher le modal uniquement si les salaires viennent d'être payés
-                if (!lastPayday || parseInt(lastPayday) !== currentMonth) {
-                    showModal('Salaires payés', 'Les salaires des employés ont été payés avec succès.');
-                }
-            })
-            .catch(e => {
-                console.error("Erreur lors du paiement des salaires:", e);
-                showModal('Erreur', "Erreur lors du paiement des salaires.");
+            await db.collection('utilisateurs').doc(username).update({
+              solde: userData.solde + data.salaire
             });
-        }
-
-        // Modal (rendu global)
-        window.showModal = function(title, body) {
-            document.getElementById('modalTitle').textContent = title;
-            document.getElementById('modalBody').innerHTML = body;
-            document.getElementById('modal').classList.add('show');
-        }
-
-        window.closeModal = function() {
-            document.getElementById('modal').classList.remove('show');
-        }
-
-        // --- Game Code (Mise à jour pour sauvegarder le score) ---
-        const canvas = document.getElementById('gameCanvas');
-        const ctx = canvas.getContext('2d');
-        const startScreen = document.getElementById('startScreen');
-        const gameOverScreen = document.getElementById('gameOverScreen');
-        const scoreElement = document.getElementById('score');
-        const finalScoreElement = document.getElementById('finalScore');
-        const finalEarningsElement = document.getElementById('finalEarnings');
-        const startBtn = document.getElementById('startBtn');
-        const restartBtn = document.getElementById('restartBtn');
-
-        function resizeCanvas() {
-            canvas.width = canvas.offsetWidth;
-            canvas.height = canvas.offsetHeight;
-        }
-        resizeCanvas();
-        window.addEventListener('resize', resizeCanvas);
-
-        let gameRunning = false;
-        let score = 0;
-        let gameSpeed = 5;
-        let gravity = 0.8;
-        let gameStartTime = 0;
-        let earnedCailloux = 0;
-        // gameBestScore est initialisé lors du login
-
-        const player = {
-            x: 100,
-            y: 0,
-            width: 40,
-            height: 40,
-            velocityY: 0,
-            jumping: false,
-            rotation: 0
-        };
-
-        const ground = {
-            y: canvas.height - 80,
-            height: 80
-        };
-
-        let obstacles = [];
-        let obstacleTimer = 0;
-        let obstacleInterval = 100;
-        
-        let clouds = [];
-        for (let i = 0; i < 3; i++) {
-            clouds.push({
-                x: Math.random() * canvas.width,
-                y: Math.random() * (canvas.height / 3),
-                size: 20 + Math.random() * 20
+            
+            await db.collection('salaries').doc(username).update({
+              dernierVersement: now.toISOString()
             });
-        }
-
-        function jump() {
-            if (!gameRunning || player.jumping) return;
-            player.velocityY = -15; // Force de saut
-            player.jumping = true;
-        }
-
-        function update() {
-            if (!gameRunning) return;
-
-            // Mettre à jour les stats
-            updateStats();
-
-            // Mouvement du joueur
-            player.velocityY += gravity;
-            player.y += player.velocityY;
-            player.rotation += 0.1 * gameSpeed; // Rotation pour le fun
-
-            // Collision avec le sol
-            const groundY = canvas.height - player.height - ground.height;
-            if (player.y >= groundY) {
-                player.y = groundY;
-                player.velocityY = 0;
-                player.jumping = false;
-            }
-
-            // Spawn d'obstacles
-            obstacleTimer++;
-            if (obstacleTimer >= obstacleInterval) {
-                const height = 40; // Hauteur fixe de l'obstacle
-                obstacles.push({
-                    x: canvas.width,
-                    y: canvas.height - height - ground.height,
-                    width: 30 + Math.random() * 40,
-                    height: height
-                });
-                obstacleInterval = 70 + Math.random() * 80; // Intervalle aléatoire
-                obstacleTimer = 0;
-            }
-
-            // Mouvement des obstacles et des nuages
-            obstacles.forEach(obstacle => {
-                obstacle.x -= gameSpeed;
-
-                // Vérification de la collision
-                if (
-                    player.x < obstacle.x + obstacle.width &&
-                    player.x + player.width > obstacle.x &&
-                    player.y + player.height > obstacle.y
-                ) {
-                    gameOver();
-                }
-            });
-
-            clouds.forEach(cloud => {
-                cloud.x -= gameSpeed * 0.2; // Vitesse des nuages plus lente
-                if (cloud.x < -cloud.size * 3) {
-                    cloud.x = canvas.width + cloud.size * 3;
-                    cloud.y = Math.random() * (canvas.height / 3);
-                    cloud.size = 20 + Math.random() * 20;
-                }
-            });
-
-            // Supprimer les obstacles sortis de l'écran
-            obstacles = obstacles.filter(obstacle => obstacle.x + obstacle.width > 0);
-
-            // Mise à jour du score
-            score++;
-            scoreElement.textContent = score;
-
-            // Augmenter la difficulté
-            if (score % 500 === 0) {
-                gameSpeed += 0.5;
-            }
-        }
-
-        function drawRock() {
-            ctx.save();
-            ctx.translate(player.x + player.width / 2, player.y + player.height / 2);
-            ctx.rotate(player.rotation);
             
-            // Dessin du Caillou (Rocher)
-            const size = player.width;
-            const isDark = document.body.classList.contains('dark');
-            
-            ctx.fillStyle = isDark ? '#a0a0a0' : '#666'; 
-            ctx.beginPath();
-            // Forme irrégulière simple
-            ctx.moveTo(-size/2, 0);
-            ctx.lineTo(-size/4, -size/2);
-            ctx.lineTo(size/4, -size/2);
-            ctx.lineTo(size/2, -size/4);
-            ctx.lineTo(size/2, size/4);
-            ctx.lineTo(size/4, size/2);
-            ctx.lineTo(-size/4, size/2);
-            ctx.closePath();
-            ctx.fill();
-            
-            ctx.strokeStyle = isDark ? '#b0b0b0' : '#555';
-            ctx.lineWidth = 2;
-            ctx.stroke();
-
-            // Reflets/détails
-            ctx.fillStyle = isDark ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
-            ctx.beginPath();
-            ctx.arc(-size/6, -size/6, size/8, 0, Math.PI * 2);
-            ctx.fill();
-            
-            ctx.restore();
+            showToast(`Salaire de ${data.salaire} cailloux versé à ${username}!`, 'success');
+          }
+        } catch (error) {
+          console.error('Erreur versement salaire:', error);
         }
+      }
+    }
+  }
+}
 
-        function drawObstacle(obstacle) {
-            ctx.fillStyle = 'black'; // Pointes
-            ctx.beginPath();
-            const spikeWidth = obstacle.width / 3;
-            
-            for (let i = 0; i < 3; i++) {
-                const x = obstacle.x + i * spikeWidth;
-                ctx.moveTo(x, obstacle.y + obstacle.height);
-                ctx.lineTo(x + spikeWidth / 2, obstacle.y);
-                ctx.lineTo(x + spikeWidth, obstacle.y + obstacle.height);
-            }
-            ctx.closePath();
-            ctx.fill();
+// UI Functions
+function toggleMenu() {
+  const menu = document.getElementById('menu');
+  menu.style.display = menu.style.display === 'none' ? 'block' : 'none';
+}
 
-            // Ombre
-            ctx.fillStyle = 'rgba(0, 0, 0, 0.2)';
-            ctx.fillRect(obstacle.x, obstacle.y + obstacle.height, obstacle.width, 5);
+function showSection(sectionId) {
+  document.querySelectorAll('.section').forEach(section => {
+    section.classList.remove('active');
+  });
+  document.getElementById(sectionId).classList.add('active');
+  document.getElementById('menu').style.display = 'none';
+
+  if (sectionId === 'bibliotheque') {
+    afficherBibliotheque();
+  } else if (sectionId === 'classement') {
+    afficherClassement();
+  } else if (sectionId === 'jeu') {
+    afficherJeu();
+  } else if (sectionId === 'messages') {
+    afficherMessages();
+  } else if (sectionId === 'admin') {
+    afficherAdmin();
+  }
+}
+
+function showToast(message, type = 'info') {
+  const toast = document.createElement('div');
+  toast.textContent = message;
+  toast.style.cssText = `
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    padding: 1rem 1.5rem;
+    background: ${type === 'success' ? '#51cf66' : type === 'error' ? '#ff6b6b' : '#FFD700'};
+    color: ${type === 'success' || type === 'error' ? 'white' : '#2c2420'};
+    border-radius: 10px;
+    font-weight: bold;
+    z-index: 10001;
+    box-shadow: 0 4px 6px rgba(0,0,0,0.3);
+  `;
+  document.body.appendChild(toast);
+  setTimeout(() => toast.remove(), 3000);
+}
+
+function showCustomModal(title, message, onConfirm) {
+  const modal = document.createElement('div');
+  modal.className = 'modal-overlay';
+  modal.innerHTML = `
+    <div class="modal-content">
+      <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 1rem;">${title}</h3>
+      <p style="color: #FFD700; margin-bottom: 1.5rem;">${message}</p>
+      <div style="display: flex; gap: 1rem;">
+        <button onclick="this.closest('.modal-overlay').remove()" class="btn-primary" style="flex: 1; padding: 0.5rem; border-radius: 0.5rem;">Annuler</button>
+        <button onclick="this.closest('.modal-overlay').remove(); (${onConfirm})()" class="btn-primary" style="flex: 1; padding: 0.5rem; border-radius: 0.5rem; background: #8B0000;">Confirmer</button>
+      </div>
+    </div>
+  `;
+  document.body.appendChild(modal);
+}
+
+// Auth Functions
+function toggleClassicLogin() {
+  const form = document.getElementById('classic-login-form');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('signup-form').style.display = 'none';
+}
+
+function toggleSignup() {
+  const form = document.getElementById('signup-form');
+  form.style.display = form.style.display === 'none' ? 'block' : 'none';
+  document.getElementById('classic-login-form').style.display = 'none';
+}
+
+async function handleClassicLogin(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const identifiant = formData.get('identifiant').toUpperCase();
+  const motDePasse = formData.get('motDePasse');
+
+  // Vérifier si l'utilisateur est banni
+  if (bannedUsers.includes(identifiant)) {
+    document.getElementById('login-error').textContent = 'Vous êtes banni de cette plateforme.';
+    return;
+  }
+
+  try {
+    const userDoc = await db.collection('utilisateurs').doc(identifiant).get();
+    if (userDoc.exists && userDoc.data().motDePasse === motDePasse) {
+      currentUser = identifiant;
+      afficherUserDashboard();
+      showToast('Connexion réussie!', 'success');
+    } else {
+      document.getElementById('login-error').textContent = 'Identifiant ou mot de passe incorrect';
+    }
+  } catch (error) {
+    console.error('Erreur connexion:', error);
+    document.getElementById('login-error').textContent = 'Erreur de connexion';
+  }
+}
+
+async function handleSignup(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const identifiant = formData.get('identifiant').toUpperCase();
+  const email = formData.get('email');
+  const motDePasse = formData.get('motDePasse');
+  const confirmMotDePasse = formData.get('confirmMotDePasse');
+
+  if (motDePasse !== confirmMotDePasse) {
+    document.getElementById('signup-error').textContent = 'Les mots de passe ne correspondent pas';
+    return;
+  }
+
+  try {
+    const userDoc = await db.collection('utilisateurs').doc(identifiant).get();
+    if (userDoc.exists) {
+      document.getElementById('signup-error').textContent = 'Cet identifiant existe déjà';
+      return;
+    }
+
+    await db.collection('utilisateurs').doc(identifiant).set({
+      solde: 10,
+      motDePasse: motDePasse,
+      email: email,
+      emailVerifie: false,
+      createdAt: new Date()
+    });
+
+    document.getElementById('signup-success').textContent = 'Compte créé avec succès! Vous pouvez vous connecter.';
+    setTimeout(() => {
+      document.getElementById('signup-form').style.display = 'none';
+      toggleClassicLogin();
+    }, 2000);
+  } catch (error) {
+    console.error('Erreur création compte:', error);
+    document.getElementById('signup-error').textContent = 'Erreur lors de la création du compte';
+  }
+}
+
+async function afficherUserDashboard() {
+  document.getElementById('login-section').style.display = 'none';
+  document.getElementById('user-dashboard').style.display = 'block';
+  document.getElementById('order-history').style.display = 'block';
+  document.getElementById('messages-menu-btn').style.display = 'block';
+
+  const userDoc = await db.collection('utilisateurs').doc(currentUser).get();
+  const userData = userDoc.data();
+
+  document.getElementById('user-name').textContent = currentUser;
+  document.getElementById('user-balance').textContent = userData.solde.toLocaleString();
+
+  // Vérifier si l'utilisateur est admin
+  if (defaultUsers[currentUser]?.isAdmin) {
+    document.getElementById('admin-menu-btn').style.display = 'block';
+  }
+
+  afficherHistoriqueCommandes();
+}
+
+function logout() {
+  currentUser = null;
+  panier = [];
+  document.getElementById('login-section').style.display = 'block';
+  document.getElementById('user-dashboard').style.display = 'none';
+  document.getElementById('order-history').style.display = 'none';
+  document.getElementById('messages-menu-btn').style.display = 'none';
+  document.getElementById('admin-menu-btn').style.display = 'none';
+  afficherPanier();
+  showToast('Déconnexion réussie', 'success');
+}
+
+// QR Code Scanner
+let qrStream = null;
+let qrUsername = null;
+
+async function startQRScanner() {
+  document.getElementById('qr-scanner-overlay').style.display = 'flex';
+  const video = document.getElementById('qr-video');
+  const canvas = document.getElementById('qr-canvas');
+  const context = canvas.getContext('2d');
+
+  try {
+    qrStream = await navigator.mediaDevices.getUserMedia({ 
+      video: { facingMode: 'environment' } 
+    });
+    video.srcObject = qrStream;
+    document.getElementById('scan-message').textContent = 'Placez le QR code dans le cadre';
+
+    const scanQR = () => {
+      if (video.readyState === video.HAVE_ENOUGH_DATA) {
+        canvas.width = video.videoWidth;
+        canvas.height = video.videoHeight;
+        context.drawImage(video, 0, 0, canvas.width, canvas.height);
+        const imageData = context.getImageData(0, 0, canvas.width, canvas.height);
+        const code = jsQR(imageData.data, imageData.width, imageData.height);
+
+        if (code) {
+          qrUsername = code.data;
+          stopQRScanner();
+          document.getElementById('qr-code-verification-overlay').style.display = 'flex';
+          document.getElementById('qr-user-prompt').textContent = `Code détecté pour ${qrUsername}. Entrez votre code secret.`;
         }
+      }
+      if (qrStream) {
+        requestAnimationFrame(scanQR);
+      }
+    };
+    scanQR();
+  } catch (error) {
+    console.error('Erreur caméra:', error);
+    document.getElementById('scan-message').textContent = 'Impossible d\'accéder à la caméra';
+  }
+}
 
-        function drawGround() {
-            const isDark = document.body.classList.contains('dark');
-            ctx.fillStyle = isDark ? '#1e293b' : '#94a3b8';
-            ctx.fillRect(0, ground.y, canvas.width, ground.height);
+function stopQRScanner() {
+  if (qrStream) {
+    qrStream.getTracks().forEach(track => track.stop());
+    qrStream = null;
+  }
+  document.getElementById('qr-scanner-overlay').style.display = 'none';
+}
 
-            ctx.fillStyle = isDark ? '#0f172a' : '#64748b';
-            for (let i = 0; i < canvas.width; i += 40) {
-                ctx.fillRect(i, ground.y, 20, ground.height);
-            }
+async function handleQRVerify(event) {
+  event.preventDefault();
+  const secretCode = document.getElementById('qr-secret-code').value;
 
-            ctx.strokeStyle = isDark ? '#475569' : '#cbd5e1';
-            ctx.lineWidth = 3;
-            ctx.beginPath();
-            ctx.moveTo(0, ground.y);
-            ctx.lineTo(canvas.width, ground.y);
-            ctx.stroke();
-        }
+  const userDefault = defaultUsers[qrUsername];
+  if (userDefault && userDefault.qrCode === secretCode) {
+    currentUser = qrUsername;
+    document.getElementById('qr-code-verification-overlay').style.display = 'none';
+    afficherUserDashboard();
+    showToast('Connexion QR réussie!', 'success');
+  } else {
+    document.getElementById('qr-verify-error').textContent = 'Code secret incorrect';
+  }
+}
 
-        function drawClouds() {
-            ctx.fillStyle = 'rgba(255, 255, 255, 0.3)';
-            clouds.forEach(cloud => {
-                ctx.beginPath();
-                ctx.arc(cloud.x, cloud.y, 20, 0, Math.PI * 2);
-                ctx.arc(cloud.x + 25, cloud.y, 25, 0, Math.PI * 2);
-                ctx.arc(cloud.x + 50, cloud.y, 20, 0, Math.PI * 2);
-                ctx.fill();
-            });
-        }
-        
-        function updateStats() {
-            const timeElapsed = (Date.now() - gameStartTime) / 1000;
-            document.getElementById('gameAliveTime').textContent = `${timeElapsed.toFixed(1)}s`;
+function cancelQRVerify() {
+  document.getElementById('qr-code-verification-overlay').style.display = 'none';
+  qrUsername = null;
+}
 
-            // Gagner 1 caillou toutes les 10 secondes (1 caillou / 600 frames à 60fps, score ~ 600)
-            const newEarnings = Math.floor(score / 600); 
-            if (newEarnings > earnedCailloux) {
-                earnedCailloux = newEarnings;
-                document.getElementById('gameEarnings').textContent = earnedCailloux;
-            }
-        }
+// Shop Functions
+function afficherArticles() {
+  const container = document.getElementById('articles-container');
+  container.innerHTML = '';
 
-        function draw() {
-            const isDark = document.body.classList.contains('dark');
-            const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-            if (isDark) {
-                gradient.addColorStop(0, '#0f172a');
-                gradient.addColorStop(1, '#1e293b');
-            } else {
-                gradient.addColorStop(0, '#87ceeb');
-                gradient.addColorStop(1, '#e0f2fe');
-            }
-            ctx.fillStyle = gradient;
-            ctx.fillRect(0, 0, canvas.width, canvas.height);
+  // Nettoyer les articles expirés
+  const now = new Date();
+  articles = articles.filter(article => {
+    if (article.expireAt && new Date(article.expireAt) < now) {
+      db.collection('articles').doc(article.id).delete();
+      return false;
+    }
+    return true;
+  });
 
-            drawClouds();
-            drawGround();
-            obstacles.forEach(drawObstacle);
-            drawRock();
-        }
+  articles.forEach(article => {
+    const card = document.createElement('div');
+    card.className = `card rarity-${article.rareté || 'basique'}`;
+    card.style.cssText = 'padding: 1.5rem; text-align: center; cursor: pointer; transition: transform 0.3s;';
+    card.onmouseover = () => card.style.transform = 'scale(1.05)';
+    card.onmouseout = () => card.style.transform = 'scale(1)';
 
-        function gameLoop() {
-            update();
-            draw();
-            requestAnimationFrame(gameLoop);
-        }
+    const rarityBadge = article.rareté ? `<div style="background: ${
+      article.rareté === 'goat' ? '#FFD700' :
+      article.rareté === 'rare' ? '#9945ff' :
+      article.rareté === 'basique' ? '#4a9eff' : '#666'
+    }; color: white; padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.75rem; font-weight: bold; margin-bottom: 0.5rem; display: inline-block;">${article.rareté.toUpperCase()}</div>` : '';
 
-        function startGame() {
-            gameRunning = true;
-            score = 0;
-            gameSpeed = 5;
-            earnedCailloux = 0;
-            obstacles = [];
-            player.y = 0;
-            player.velocityY = 0;
-            gameStartTime = Date.now();
-            document.getElementById('gameEarnings').textContent = '0';
-            document.getElementById('gameAliveTime').textContent = '0s';
-            startScreen.classList.add('hide');
-            gameOverScreen.classList.remove('show');
-        }
+    const expireBadge = article.expireAt ? `<div style="background: #ff6b6b; color: white; padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.75rem; margin-bottom: 0.5rem;">⏰ LIMITÉ</div>` : '';
 
-        async function gameOver() {
-            gameRunning = false;
-            finalScoreElement.textContent = score;
-            finalEarningsElement.textContent = earnedCailloux;
-            gameOverScreen.classList.add('show');
+    card.innerHTML = `
+      ${rarityBadge}
+      ${expireBadge}
+      ${article.img ? `<img src="${article.img}" alt="${article.nom}" style="width: 100px; height: 100px; object-fit: contain; margin: 0 auto 1rem;">` : `<div style="font-size: 4rem; margin-bottom: 1rem;">${article.emoji || '📦'}</div>`}
+      <h3 class="gold-text" style="font-size: 1.25rem; margin-bottom: 0.5rem;">${article.nom}</h3>
+      <p class="gold-text" style="font-size: 1.125rem; margin-bottom: 1rem;">${article.prix} cailloux</p>
+      <button onclick="ajouterAuPanier('${article.id}')" class="btn-primary" style="width: 100%; padding: 0.5rem; border-radius: 0.5rem;">Ajouter au panier</button>
+    `;
 
-            if (!currentUser) return; // Ne pas sauvegarder si déconnecté
+    container.appendChild(card);
+  });
+}
 
-            let shouldUpdate = false;
-            let dataToUpdate = {};
+function filtrerArticles() {
+  const recherche = document.getElementById('recherche').value.toLowerCase();
+  const container = document.getElementById('articles-container');
+  const cards = container.children;
 
-            if (score > gameBestScore) {
-                gameBestScore = score;
-                document.getElementById('gameBestScore').textContent = gameBestScore;
-                dataToUpdate.bestScore = gameBestScore;
-                shouldUpdate = true;
-            }
+  for (let card of cards) {
+    const nom = card.querySelector('h3').textContent.toLowerCase();
+    card.style.display = nom.includes(recherche) ? 'block' : 'none';
+  }
+}
 
-            if (earnedCailloux > 0) {
-                // Mise à jour de l'état local
-                currentUserData.cailloux += earnedCailloux;
-                updateCaillouxDisplay();
-                
-                // Préparation de la mise à jour Firestore (champ incrémental)
-                dataToUpdate.cailloux = increment(earnedCailloux); // Utilisation de FieldValue.increment modulaire
-                shouldUpdate = true;
-            }
+function ajouterAuPanier(articleId) {
+  const article = articles.find(a => a.id === articleId);
+  if (!article) return;
 
-            if (shouldUpdate) {
-                // Utiliser la fonction pour écrire sur Firestore (un seul appel)
-                await updateUserDoc(dataToUpdate); 
-                renderLeaderboard();
-            }
-        }
+  const existant = panier.find(item => item.id === articleId);
+  if (existant) {
+    existant.quantite++;
+  } else {
+    panier.push({ ...article, quantite: 1 });
+  }
 
-        startBtn.addEventListener('click', startGame);
-        restartBtn.addEventListener('click', startGame);
+  afficherPanier();
+  showToast('Article ajouté au panier!', 'success');
+}
 
-        canvas.addEventListener('click', jump);
-        canvas.addEventListener('touchstart', (e) => {
-            e.preventDefault();
-            jump();
+function afficherPanier() {
+  const emptyCart = document.getElementById('empty-cart');
+  const listePanier = document.getElementById('liste-panier');
+  const totalPanier = document.getElementById('total-panier');
+  const buyButton = document.getElementById('buy-button');
+  const clearButton = document.getElementById('clear-cart-button');
+
+  if (panier.length === 0) {
+    emptyCart.style.display = 'block';
+    listePanier.style.display = 'none';
+    totalPanier.style.display = 'none';
+    buyButton.style.display = 'none';
+    clearButton.style.display = 'none';
+    return;
+  }
+
+  emptyCart.style.display = 'none';
+  listePanier.style.display = 'block';
+  totalPanier.style.display = 'block';
+  buyButton.style.display = 'block';
+  clearButton.style.display = 'block';
+
+  listePanier.innerHTML = '';
+  let total = 0;
+
+  panier.forEach((item, index) => {
+    const li = document.createElement('li');
+    li.style.cssText = 'background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 0.5rem; display: flex; align-items: center; justify-content: space-between;';
+    
+    const itemTotal = item.prix * item.quantite;
+    total += itemTotal;
+
+    li.innerHTML = `
+      <div style="display: flex; align-items: center; gap: 1rem; flex: 1;">
+        ${item.img ? `<img src="${item.img}" alt="${item.nom}" style="width: 50px; height: 50px; object-fit: contain;">` : `<span style="font-size: 2rem;">${item.emoji || '📦'}</span>`}
+        <div>
+          <div class="gold-text" style="font-weight: bold;">${item.nom}</div>
+          <div style="color: #FFD700; font-size: 0.875rem;">${item.prix} cailloux × ${item.quantite} = ${itemTotal} cailloux</div>
+        </div>
+      </div>
+      <div style="display: flex; gap: 0.5rem; align-items: center;">
+        <button onclick="modifierQuantite(${index}, -1)" style="background: #8B0000; color: #FFD700; border: 1px solid #FFD700; padding: 0.25rem 0.5rem; border-radius: 5px; cursor: pointer;">−</button>
+        <span class="gold-text" style="font-weight: bold;">${item.quantite}</span>
+        <button onclick="modifierQuantite(${index}, 1)" style="background: #8B7355; color: #FFD700; border: 1px solid #FFD700; padding: 0.25rem 0.5rem; border-radius: 5px; cursor: pointer;">+</button>
+        <button onclick="retirerDuPanier(${index})" style="background: #8B0000; color: #FFD700; border: 1px solid #FFD700; padding: 0.25rem 0.5rem; border-radius: 5px; cursor: pointer;">🗑️</button>
+      </div>
+    `;
+
+    listePanier.appendChild(li);
+  });
+
+  totalPanier.textContent = `Total : ${total} cailloux`;
+}
+
+function modifierQuantite(index, delta) {
+  panier[index].quantite += delta;
+  if (panier[index].quantite <= 0) {
+    panier.splice(index, 1);
+  }
+  afficherPanier();
+}
+
+function retirerDuPanier(index) {
+  panier.splice(index, 1);
+  afficherPanier();
+}
+
+function viderPanier() {
+  panier = [];
+  afficherPanier();
+  showToast('Panier vidé', 'info');
+}
+
+async function acheter() {
+  if (!currentUser) {
+    showToast('Veuillez vous connecter', 'error');
+    return;
+  }
+
+  if (panier.length === 0) {
+    showToast('Votre panier est vide', 'error');
+    return;
+  }
+
+  const total = panier.reduce((sum, item) => sum + (item.prix * item.quantite), 0);
+  
+  try {
+    const userDoc = await db.collection('utilisateurs').doc(currentUser).get();
+    const userData = userDoc.data();
+
+    if (userData.solde < total) {
+      showToast('Solde insuffisant', 'error');
+      return;
+    }
+
+    // Déduire le montant
+    await db.collection('utilisateurs').doc(currentUser).update({
+      solde: userData.solde - total
+    });
+
+    // Ajouter les articles à la bibliothèque
+    for (const item of panier) {
+      for (let i = 0; i < item.quantite; i++) {
+        await db.collection('bibliotheque').add({
+          utilisateur: currentUser,
+          article: item.nom,
+          rareté: item.rareté || 'basique',
+          emoji: item.emoji || '📦',
+          img: item.img || null,
+          dateAchat: new Date()
         });
+      }
+    }
 
-        document.addEventListener('keydown', (e) => {
-            if (e.code === 'Space') {
-                e.preventDefault();
-                jump();
-            }
+    // Enregistrer la commande
+    await db.collection('commandes').add({
+      utilisateur: currentUser,
+      articles: panier,
+      total: total,
+      date: new Date(),
+      numero: 'JPC-' + Math.random().toString(36).substr(2, 10).toUpperCase()
+    });
+
+    showToast('Achat réussi! Consultez votre bibliothèque.', 'success');
+    panier = [];
+    afficherPanier();
+    afficherUserDashboard();
+  } catch (error) {
+    console.error('Erreur achat:', error);
+    showToast('Erreur lors de l\'achat', 'error');
+  }
+}
+
+async function envoyerCailloux(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const destinataire = formData.get('destinataire').toUpperCase();
+  const montant = parseInt(formData.get('montant'));
+
+  if (!currentUser) {
+    showToast('Vous devez être connecté', 'error');
+    return;
+  }
+
+  try {
+    const userDoc = await db.collection('utilisateurs').doc(currentUser).get();
+    const destDoc = await db.collection('utilisateurs').doc(destinataire).get();
+
+    if (!destDoc.exists) {
+      showToast('Utilisateur destinataire introuvable', 'error');
+      return;
+    }
+
+    const userData = userDoc.data();
+    if (userData.solde < montant) {
+      showToast('Solde insuffisant', 'error');
+      return;
+    }
+
+    await db.collection('utilisateurs').doc(currentUser).update({
+      solde: userData.solde - montant
+    });
+
+    const destData = destDoc.data();
+    await db.collection('utilisateurs').doc(destinataire).update({
+      solde: destData.solde + montant
+    });
+
+    showToast(`${montant} cailloux envoyés à ${destinataire}!`, 'success');
+    afficherUserDashboard();
+    event.target.reset();
+  } catch (error) {
+    console.error('Erreur envoi:', error);
+    showToast('Erreur lors de l\'envoi', 'error');
+  }
+}
+
+function handleCodeInput(event) {
+  if (event.key === 'Enter') {
+    const code = event.target.value.toUpperCase();
+    const reduction = codesPromo[code];
+    
+    if (reduction) {
+      document.getElementById('code-success').style.display = 'block';
+      document.getElementById('code-success').textContent = `Code validé! ${reduction}% de réduction`;
+      event.target.value = '';
+    }
+  }
+}
+
+async function afficherHistoriqueCommandes() {
+  const historyList = document.getElementById('history-list');
+  historyList.innerHTML = '';
+
+  try {
+    const commandesSnapshot = await db.collection('commandes')
+      .where('utilisateur', '==', currentUser)
+      .orderBy('date', 'desc')
+      .get();
+
+    commandesSnapshot.forEach(doc => {
+      const commande = doc.data();
+      const div = document.createElement('div');
+      div.style.cssText = 'background: rgba(0,0,0,0.2); padding: 1rem; border-radius: 10px; margin-bottom: 1rem;';
+      
+      div.innerHTML = `
+        <div style="display: flex; justify-content: space-between; margin-bottom: 0.5rem;">
+          <span class="gold-text" style="font-weight: bold;">Commande ${commande.numero}</span>
+          <span style="color: #FFD700;">${new Date(commande.date.toDate()).toLocaleDateString()}</span>
+        </div>
+        <div style="color: #FFD700; margin-bottom: 0.5rem;">
+          Articles: ${commande.articles.map(a => `${a.nom} (x${a.quantite})`).join(', ')}
+        </div>
+        <div class="gold-text" style="font-weight: bold;">Total: ${commande.total} cailloux</div>
+      `;
+
+      historyList.appendChild(div);
+    });
+  } catch (error) {
+    console.error('Erreur historique:', error);
+  }
+}
+
+// Packs
+function getRarityFromRandom() {
+  const rand = Math.random() * 100;
+  if (rand < 1) return 'goat';
+  if (rand < 20) return 'rare';
+  if (rand < 50) return 'basique';
+  return 'nul';
+}
+
+async function ouvrirPack(typePack) {
+  if (!currentUser) {
+    showToast('Connectez-vous pour ouvrir des packs!', 'error');
+    return;
+  }
+
+  const prix = {
+    'basique': 100,
+    'rare': 500,
+    'goat': 2000
+  };
+
+  const prixPack = prix[typePack];
+
+  try {
+    const userDoc = await db.collection('utilisateurs').doc(currentUser).get();
+    const userData = userDoc.data();
+
+    if (userData.solde < prixPack) {
+      showToast('Solde insuffisant', 'error');
+      return;
+    }
+
+    // Déduire le prix
+    await db.collection('utilisateurs').doc(currentUser).update({
+      solde: userData.solde - prixPack
+    });
+
+    // Générer un objet aléatoire
+    const rareté = getRarityFromRandom();
+    const emojis = ['🎨', '⚽', '🎸', '🎮', '📱', '💎', '👑', '🔥', '⭐', '🏆'];
+    const randomEmoji = emojis[Math.floor(Math.random() * emojis.length)];
+    const nomObjet = `Objet ${rareté} ${randomEmoji}`;
+
+    // Ajouter à la bibliothèque
+    await db.collection('bibliotheque').add({
+      utilisateur: currentUser,
+      article: nomObjet,
+      rareté: rareté,
+      emoji: randomEmoji,
+      img: null,
+      dateAchat: new Date()
+    });
+
+    showToast(`Pack ouvert! Vous avez obtenu: ${nomObjet} (${rareté.toUpperCase()})`, 'success');
+    afficherUserDashboard();
+  } catch (error) {
+    console.error('Erreur ouverture pack:', error);
+    showToast('Erreur lors de l\'ouverture du pack', 'error');
+  }
+}
+
+// Bibliothèque
+async function afficherBibliotheque() {
+  const loginRequired = document.getElementById('bibliotheque-login-required');
+  const content = document.getElementById('bibliotheque-content');
+
+  if (!currentUser) {
+    loginRequired.style.display = 'block';
+    content.style.display = 'none';
+    return;
+  }
+
+  loginRequired.style.display = 'none';
+  content.style.display = 'block';
+
+  try {
+    const bibliothequeSnapshot = await db.collection('bibliotheque')
+      .where('utilisateur', '==', currentUser)
+      .get();
+
+    const items = { goat: [], rare: [], basique: [], nul: [] };
+    let total = 0;
+
+    bibliothequeSnapshot.forEach(doc => {
+      const item = doc.data();
+      items[item.rareté || 'basique'].push(item);
+      total++;
+    });
+
+    document.getElementById('total-objets').textContent = total;
+
+    // Afficher par rareté
+    ['goat', 'rare', 'basique', 'nul'].forEach(rareté => {
+      const container = document.getElementById(`${rareté}-items`);
+      container.innerHTML = '';
+
+      if (items[rareté].length === 0) {
+        container.innerHTML = '<p style="color: rgba(255, 215, 0, 0.5); font-style: italic;">Aucun objet</p>';
+      } else {
+        items[rareté].forEach(item => {
+          const card = document.createElement('div');
+          card.className = `card rarity-${rareté}`;
+          card.style.cssText = 'padding: 1rem; text-align: center;';
+
+          card.innerHTML = `
+            ${item.img ? `<img src="${item.img}" alt="${item.article}" style="width: 80px; height: 80px; object-fit: contain; margin: 0 auto 0.5rem;">` : `<div style="font-size: 3rem; margin-bottom: 0.5rem;">${item.emoji || '📦'}</div>`}
+            <h4 class="gold-text" style="font-size: 1rem;">${item.article}</h4>
+            <p style="color: #FFD700; font-size: 0.75rem;">${new Date(item.dateAchat.toDate()).toLocaleDateString()}</p>
+          `;
+
+          container.appendChild(card);
         });
+      }
+    });
+  } catch (error) {
+    console.error('Erreur bibliothèque:', error);
+  }
+}
 
-        gameLoop();
+// Classement
+async function afficherClassement() {
+  const podium = document.getElementById('classement-podium');
+  podium.innerHTML = '';
 
-        // Initialisation - Lancer la vérification d'expiration et le chargement des produits
-        setInterval(checkExpiredProducts, 60000);
-        // fetchShopProducts sera appelé après la connexion pour garantir que la boutique est prête.
-    </script>
+  try {
+    const usersSnapshot = await db.collection('utilisateurs').get();
+    const users = [];
+
+    usersSnapshot.forEach(doc => {
+      users.push({ username: doc.id, solde: doc.data().solde });
+    });
+
+    users.sort((a, b) => b.solde - a.solde);
+    const top3 = users.slice(0, 3);
+
+    top3.forEach((user, index) => {
+      const position = index + 1;
+      const medal = position === 1 ? '🥇' : position === 2 ? '🥈' : '🥉';
+      const bgColor = position === 1 ? 'rgba(255, 215, 0, 0.2)' : position === 2 ? 'rgba(192, 192, 192, 0.2)' : 'rgba(205, 127, 50, 0.2)';
+
+      const card = document.createElement('div');
+      card.style.cssText = `background: ${bgColor}; border: 2px solid #FFD700; border-radius: 15px; padding: 1.5rem; text-align: center;`;
+
+      card.innerHTML = `
+        <div style="font-size: 3rem; margin-bottom: 0.5rem;">${medal}</div>
+        <h3 class="gold-text" style="font-size: 1.5rem; margin-bottom: 0.5rem;">${user.username}</h3>
+        <p style="color: #FFD700; font-size: 1.25rem; font-weight: bold;">${user.solde.toLocaleString()} cailloux</p>
+      `;
+
+      podium.appendChild(card);
+    });
+  } catch (error) {
+    console.error('Erreur classement:', error);
+  }
+}
+
+// Jeu Geometry Dash
+let gameCanvas, gameCtx;
+let gameRunning = false;
+let gameScore = 0;
+let gameEarnings = 0;
+let lastEarningTime = 0;
+let player = { x: 100, y: 250, width: 40, height: 40, velocityY: 0, jumping: false };
+let obstacles = [];
+let gameSpeed = 5;
+
+function afficherJeu() {
+  const loginRequired = document.getElementById('jeu-login-required');
+  const content = document.getElementById('jeu-content');
+
+  if (!currentUser) {
+    loginRequired.style.display = 'block';
+    content.style.display = 'none';
+    return;
+  }
+
+  loginRequired.style.display = 'none';
+  content.style.display = 'block';
+
+  gameCanvas = document.getElementById('game-canvas');
+  gameCtx = gameCanvas.getContext('2d');
+}
+
+function startGame() {
+  if (gameRunning) return;
+
+  gameRunning = true;
+  gameScore = 0;
+  gameEarnings = 0;
+  lastEarningTime = Date.now();
+  player = { x: 100, y: 250, width: 40, height: 40, velocityY: 0, jumping: false };
+  obstacles = [];
+  gameSpeed = 5;
+
+  document.getElementById('start-game-btn').style.display = 'none';
+  document.getElementById('restart-game-btn').style.display = 'none';
+
+  document.addEventListener('keydown', handleJump);
+  gameCanvas.addEventListener('click', handleJump);
+
+  gameLoop();
+}
+
+function handleJump(e) {
+  if (e.type === 'keydown' && e.code !== 'Space') return;
+  if (!player.jumping && gameRunning) {
+    player.velocityY = -12;
+    player.jumping = true;
+  }
+}
+
+function gameLoop() {
+  if (!gameRunning) return;
+
+  // Clear canvas
+  gameCtx.fillStyle = '#2D2D2D';
+  gameCtx.fillRect(0, 0, gameCanvas.width, gameCanvas.height);
+
+  // Draw ground
+  gameCtx.fillStyle = '#FFD700';
+  gameCtx.fillRect(0, 350, gameCanvas.width, 50);
+
+  // Update player
+  player.velocityY += 0.6; // Gravity
+  player.y += player.velocityY;
+
+  if (player.y >= 310) {
+    player.y = 310;
+    player.velocityY = 0;
+    player.jumping = false;
+  }
+
+  // Draw player (rock/caillou)
+  gameCtx.fillStyle = '#8B7355';
+  gameCtx.beginPath();
+  gameCtx.arc(player.x + player.width / 2, player.y + player.height / 2, player.width / 2, 0, Math.PI * 2);
+  gameCtx.fill();
+  gameCtx.strokeStyle = '#FFD700';
+  gameCtx.lineWidth = 2;
+  gameCtx.stroke();
+
+  // Generate obstacles
+  if (Math.random() < 0.02) {
+    obstacles.push({
+      x: gameCanvas.width,
+      y: 310,
+      width: 30,
+      height: 40
+    });
+  }
+
+  // Update and draw obstacles
+  for (let i = obstacles.length - 1; i >= 0; i--) {
+    obstacles[i].x -= gameSpeed;
+
+    gameCtx.fillStyle = '#8B0000';
+    gameCtx.fillRect(obstacles[i].x, obstacles[i].y, obstacles[i].width, obstacles[i].height);
+
+    // Collision detection
+    if (
+      player.x < obstacles[i].x + obstacles[i].width &&
+      player.x + player.width > obstacles[i].x &&
+      player.y < obstacles[i].y + obstacles[i].height &&
+      player.y + player.height > obstacles[i].y
+    ) {
+      endGame();
+      return;
+    }
+
+    // Remove off-screen obstacles
+    if (obstacles[i].x + obstacles[i].width < 0) {
+      obstacles.splice(i, 1);
+      gameScore++;
+    }
+  }
+
+  // Update earnings (1 caillou every 10 seconds)
+  const now = Date.now();
+  if (now - lastEarningTime >= 10000) {
+    gameEarnings++;
+    lastEarningTime = now;
+  }
+
+  // Update UI
+  document.getElementById('game-score').textContent = gameScore;
+  document.getElementById('game-earnings').textContent = gameEarnings;
+
+  requestAnimationFrame(gameLoop);
+}
+
+async function endGame() {
+  gameRunning = false;
+  document.getElementById('restart-game-btn').style.display = 'block';
+
+  // Ajouter les cailloux gagnés au solde
+  if (gameEarnings > 0) {
+    try {
+      const userDoc = await db.collection('utilisateurs').doc(currentUser).get();
+      const userData = userDoc.data();
+      await db.collection('utilisateurs').doc(currentUser).update({
+        solde: userData.solde + gameEarnings
+      });
+      showToast(`Vous avez gagné ${gameEarnings} cailloux!`, 'success');
+      afficherUserDashboard();
+    } catch (error) {
+      console.error('Erreur mise à jour solde:', error);
+    }
+  }
+}
+
+function restartGame() {
+  startGame();
+}
+
+// Messages
+function afficherMessages() {
+  const loginRequired = document.getElementById('messages-login-required');
+  const content = document.getElementById('messages-interface');
+
+  if (!currentUser) {
+    loginRequired.style.display = 'block';
+    content.style.display = 'none';
+    return;
+  }
+
+  loginRequired.style.display = 'none';
+  content.style.display = 'block';
+}
+
+// Admin Functions
+function afficherAdmin() {
+  // Masquer la section salaires si pas HARMAN
+  if (currentUser !== 'HARMAN') {
+    document.getElementById('admin-salary-section').style.display = 'none';
+  } else {
+    document.getElementById('admin-salary-section').style.display = 'block';
+    afficherListeSalaries();
+  }
+  
+  afficherListeBannis();
+}
+
+function toggleImageUrl(type) {
+  const emojiInput = document.getElementById('emoji-input');
+  const imageInput = document.getElementById('image-input');
+  
+  if (type === 'image') {
+    emojiInput.style.display = 'none';
+    imageInput.style.display = 'block';
+  } else {
+    emojiInput.style.display = 'block';
+    imageInput.style.display = 'none';
+  }
+}
+
+async function ajouterCailloux(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const username = formData.get('username').toUpperCase();
+  const montant = parseInt(formData.get('montant'));
+
+  try {
+    const userDoc = await db.collection('utilisateurs').doc(username).get();
+    if (!userDoc.exists) {
+      showToast('Utilisateur introuvable', 'error');
+      return;
+    }
+
+    const userData = userDoc.data();
+    await db.collection('utilisateurs').doc(username).update({
+      solde: userData.solde + montant
+    });
+
+    showToast(`${montant} cailloux ${montant > 0 ? 'ajoutés à' : 'retirés de'} ${username}!`, 'success');
+    event.target.reset();
+  } catch (error) {
+    console.error('Erreur ajout cailloux:', error);
+    showToast('Erreur lors de la modification', 'error');
+  }
+}
+
+async function ajouterProduit(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const nom = formData.get('nom');
+  const prix = parseInt(formData.get('prix'));
+  const type = formData.get('type');
+  const rareté = formData.get('rareté');
+  const duree = parseInt(formData.get('duree'));
+
+  const produit = {
+    nom: nom,
+    prix: prix,
+    rareté: rareté,
+    createdAt: new Date()
+  };
+
+  if (type === 'emoji') {
+    produit.emoji = formData.get('emoji');
+  } else {
+    produit.img = formData.get('imageUrl');
+  }
+
+  if (duree > 0) {
+    const expireDate = new Date();
+    expireDate.setHours(expireDate.getHours() + duree);
+    produit.expireAt = expireDate;
+  }
+
+  try {
+    const docRef = await db.collection('articles').add(produit);
+    articles.push({ id: docRef.id, ...produit });
+    afficherArticles();
+    showToast('Produit ajouté avec succès!', 'success');
+    event.target.reset();
+  } catch (error) {
+    console.error('Erreur ajout produit:', error);
+    showToast('Erreur lors de l\'ajout du produit', 'error');
+  }
+}
+
+async function bannirUtilisateur(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const username = formData.get('username').toUpperCase();
+
+  // Vérifier que l'utilisateur ne peut pas se bannir lui-même
+  if (username === currentUser) {
+    showToast('Vous ne pouvez pas vous bannir vous-même!', 'error');
+    return;
+  }
+
+  // Vérifier que CAMILLE ne peut pas bannir HARMAN
+  if (currentUser === 'CAMILLE' && username === 'HARMAN') {
+    showToast('Vous ne pouvez pas bannir HARMAN!', 'error');
+    return;
+  }
+
+  try {
+    await db.collection('banned').doc(username).set({
+      bannedBy: currentUser,
+      date: new Date()
+    });
+    bannedUsers.push(username);
+    afficherListeBannis();
+    showToast(`${username} a été banni`, 'success');
+    event.target.reset();
+  } catch (error) {
+    console.error('Erreur ban:', error);
+    showToast('Erreur lors du bannissement', 'error');
+  }
+}
+
+async function debannirUtilisateur(username) {
+  try {
+    await db.collection('banned').doc(username).delete();
+    bannedUsers = bannedUsers.filter(u => u !== username);
+    afficherListeBannis();
+    showToast(`${username} a été débanni`, 'success');
+  } catch (error) {
+    console.error('Erreur deban:', error);
+    showToast('Erreur lors du débannissement', 'error');
+  }
+}
+
+function afficherListeBannis() {
+  const listContainer = document.getElementById('banned-list');
+  listContainer.innerHTML = '';
+
+  if (bannedUsers.length === 0) {
+    listContainer.innerHTML = '<p style="color: rgba(255, 215, 0, 0.5); font-style: italic;">Aucun utilisateur banni</p>';
+    return;
+  }
+
+  bannedUsers.forEach(username => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 5px;';
+    div.innerHTML = `
+      <span style="color: #FFD700;">${username}</span>
+      <button onclick="debannirUtilisateur('${username}')" class="btn-primary" style="padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.875rem;">
+        Débannir
+      </button>
+    `;
+    listContainer.appendChild(div);
+  });
+}
+
+async function ajouterSalarie(event) {
+  event.preventDefault();
+  const formData = new FormData(event.target);
+  const username = formData.get('username').toUpperCase();
+  const salaire = parseInt(formData.get('salaire'));
+
+  try {
+    await db.collection('salaries').doc(username).set({
+      salaire: salaire,
+      dernierVersement: null
+    });
+    salaries[username] = { salaire: salaire, dernierVersement: null };
+    afficherListeSalaries();
+    showToast(`${username} ajouté avec un salaire de ${salaire} cailloux/mois`, 'success');
+    event.target.reset();
+  } catch (error) {
+    console.error('Erreur ajout salarié:', error);
+    showToast('Erreur lors de l\'ajout du salarié', 'error');
+  }
+}
+
+async function supprimerSalarie(username) {
+  try {
+    await db.collection('salaries').doc(username).delete();
+    delete salaries[username];
+    afficherListeSalaries();
+    showToast(`${username} retiré des salariés`, 'success');
+  } catch (error) {
+    console.error('Erreur suppression salarié:', error);
+    showToast('Erreur lors de la suppression', 'error');
+  }
+}
+
+function afficherListeSalaries() {
+  const listContainer = document.getElementById('salary-list');
+  listContainer.innerHTML = '';
+
+  if (Object.keys(salaries).length === 0) {
+    listContainer.innerHTML = '<p style="color: rgba(255, 215, 0, 0.5); font-style: italic;">Aucun salarié</p>';
+    return;
+  }
+
+  Object.entries(salaries).forEach(([username, data]) => {
+    const div = document.createElement('div');
+    div.style.cssText = 'display: flex; justify-content: space-between; align-items: center; background: rgba(0,0,0,0.2); padding: 0.75rem; border-radius: 5px;';
+    div.innerHTML = `
+      <div style="color: #FFD700;">
+        <strong>${username}</strong> - ${data.salaire} cailloux/mois
+        ${data.dernierVersement ? `<br><small style="opacity: 0.7;">Dernier versement: ${new Date(data.dernierVersement).toLocaleDateString()}</small>` : ''}
+      </div>
+      <button onclick="supprimerSalarie('${username}')" class="btn-primary" style="padding: 0.25rem 0.5rem; border-radius: 5px; font-size: 0.875rem; background: #8B0000;">
+        Retirer
+      </button>
+    `;
+    listContainer.appendChild(div);
+  });
+}
+
+</script>
+
 </body>
 </html>
